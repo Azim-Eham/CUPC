@@ -69,16 +69,14 @@ export default async function LandingPage() {
             </h1>
 
             <p className="text-white/90 text-lg md:text-2xl leading-relaxed max-w-3xl mb-12 drop-shadow-md animate-[fade-in-up_1s_ease-out_0.2s_both] font-medium">
-              A lifelong community connecting students, alumni, and faculty. Fostering mentorship, research collaboration, and professional growth in the world of physics.
+              Exploring the Universe Through Physics
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto animate-[fade-in-up_1s_ease-out_0.4s_both]">
               <Link href="/register" className="inline-flex items-center justify-center bg-gradient-to-r from-[#f2a93c] to-[#f5b942] text-brand-navy text-lg font-bold px-10 py-5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f5b942] focus-visible:ring-offset-2 focus-visible:ring-offset-surface-navy transition-all shadow-[0_4px_20px_rgba(242,169,60,0.6)] hover:shadow-[0_6px_30px_rgba(242,169,60,0.8)] hover:-translate-y-1 group">
                 Join the Community <ChevronRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link href="/mentors" className="inline-flex items-center justify-center border border-white/30 backdrop-blur-md bg-white/5 text-white text-lg font-bold px-10 py-5 rounded-full hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white transition-all hover:shadow-[0_4px_20px_rgba(255,255,255,0.1)] hover:-translate-y-1">
-                Explore Mentors
-              </Link>
+              
             </div>
           </div>
         </section>
