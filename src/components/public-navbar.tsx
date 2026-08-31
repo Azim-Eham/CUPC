@@ -21,7 +21,7 @@ export async function PublicNavbar({ isAbsolute = false }: { isAbsolute?: boolea
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6 bg-black/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/10 shadow-lg">
+          <nav className="flex items-center gap-6 bg-black/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/10 shadow-lg">
             
             {session ? (
               <Link href="/feed" className="bg-[#f2a93c] text-brand-navy text-sm font-semibold px-5 py-2 rounded-full hover:bg-[#f5b942] transition-all hover:shadow-[0_0_15px_rgba(242,169,60,0.5)] hover:-translate-y-0.5 duration-300">
@@ -42,23 +42,6 @@ export async function PublicNavbar({ isAbsolute = false }: { isAbsolute?: boolea
         </div>
       </div>
 
-      {/* Mobile Bottom Nav */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#12172e]/95 backdrop-blur-md border-t border-white/10 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
-        <nav className="flex items-center justify-around px-2 py-2">
-          
-          {session ? (
-            <Link href="/feed" className="text-xs font-semibold text-[#f2a93c] hover:text-[#f5b942] flex flex-col items-center gap-1 p-2 transition-colors">
-              <LayoutDashboard className="w-5 h-5" />
-              <span>Dashboard</span>
-            </Link>
-          ) : (
-            <Link href="/login" className="text-xs font-semibold text-[#f2a93c] hover:text-[#f5b942] flex flex-col items-center gap-1 p-2 transition-colors">
-              <LogIn className="w-5 h-5" />
-              <span>Log In</span>
-            </Link>
-          )}
-        </nav>
-      </div>
     </>
   );
 }
