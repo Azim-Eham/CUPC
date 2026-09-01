@@ -55,6 +55,9 @@ interface Post {
   comments: PostComment[];
 }
 
+import { GlassCard } from "@/components/ui/glass-card";
+import { StaggerItem } from "@/components/ui/stagger-reveal";
+
 interface PostCardProps {
   post: Post;
   currentUserId: string;
@@ -120,144 +123,143 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
   };
 
   return (
-    <Card className="mb-6">
-      <CardHeader className="pb-3">
-        <div className="flex justify-between items-start">
-          <div className="flex items-center gap-3">
-            <Avatar>
-              <AvatarImage src={post.author.profileImage || ""} />
-              <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div>
-              <CardTitle className="text-base font-semibold">{post.author.name}</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                {post.author.role} • {post.author.department}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">
-              {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
-            </span>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {canDelete && (
-                  <DropdownMenuItem className="text-destructive cursor-pointer" onClick={handleDelete} disabled={isDeleting}>
-                    <Trash2 className="mr-2 h-4 w-4" />
-                    Delete Post
-                  </DropdownMenuItem>
-                )}
-                <ReportDialog
-                  postId={post.id}
-                  trigger={
-                    <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer">
-                      <Flag className="mr-2 h-4 w-4" />
-                      Report Post
-                    </DropdownMenuItem>
-                  }
-                />
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent>
-        <div
-          className="prose dark:prose-invert max-w-none text-sm mb-4"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-        {/* Images would render here */}
-      </CardContent>
-
-      <CardFooter className="flex flex-col border-t p-0">
-        <div className="flex items-center justify-between w-full p-2 px-4 border-b">
-          <div className="flex gap-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              className={`gap-2 h-8 px-2 ${isLiked ? "text-red-500 hover:text-red-600" : "text-muted-foreground"}`}
-              onClick={handleLike}
-            >
-              <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
-              {likeCount > 0 && <span>{likeCount}</span>}
-              <span className="sr-only sm:not-sr-only sm:inline">Like</span>
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              className="gap-2 h-8 px-2 text-muted-foreground"
-              onClick={() => setShowComments(!showComments)}
-            >
-              <MessageSquare className="h-4 w-4" />
-              {post.comments.length > 0 && <span>{post.comments.length}</span>}
-              <span className="sr-only sm:not-sr-only sm:inline">Comment</span>
-            </Button>
-          </div>
-        </div>
-
-        {showComments && (
-          <div className="w-full bg-muted/20 p-4 space-y-4">
-            {/* Comment Form */}
-            <div className="flex gap-3">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback>U</AvatarFallback>
+    <StaggerItem>
+      <GlassCard className="mb-8">
+        <CardHeader className="pb-3">
+          <div className="flex justify-between items-start">
+            <div className="flex items-center gap-3">
+              <Avatar className="border border-white/10">
+                <AvatarImage src={post.author.profileImage || ""} />
+                <AvatarFallback className="bg-zinc-800 text-zinc-300">{post.author.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              <div className="flex-1 gap-2 flex flex-col">
-                <Textarea
-                  placeholder="Write a comment..."
-                  className="min-h-[60px] resize-none"
-                  value={commentContent}
-                  onChange={(e) => setCommentContent(e.target.value)}
-                />
-                <div className="flex justify-end">
-                  <Button size="sm" onClick={handleCommentSubmit} disabled={isSubmitting || !commentContent.trim()}>
-                    {isSubmitting ? "Posting..." : "Post"}
-                  </Button>
-                </div>
+              <div>
+                <CardTitle className="text-base font-semibold text-zinc-50">{post.author.name}</CardTitle>
+                <p className="text-sm text-zinc-500">
+                  {post.author.role} • {post.author.department}
+                </p>
               </div>
             </div>
 
-            {/* Comments List */}
-            <div className="space-y-4 pt-4">
-              {post.comments.map((comment: PostComment) => (
-                <div key={comment.id} className="flex gap-3">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={comment.author.profileImage || ""} />
-                    <AvatarFallback>{comment.author.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <div className="bg-muted p-3 rounded-lg text-sm">
-                      <div className="font-semibold mb-1 flex justify-between items-center">
-                        <span>{comment.author.name}</span>
-                        <ReportDialog
-                          commentId={comment.id}
-                          trigger={
-                            <Button variant="ghost" size="sm" className="h-4 w-4 p-0 text-muted-foreground hover:text-destructive">
-                              <Flag className="h-3 w-3" />
-                            </Button>
-                          }
-                        />
-                      </div>
-                      <p>{comment.content}</p>
-                    </div>
-                    <div className="flex items-center gap-4 mt-1 pl-1 text-xs text-muted-foreground">
-                      <span>{formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-zinc-500">
+                {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+              </span>
+              <DropdownMenu>
+                <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5 rounded-full" />}>
+                  <MoreHorizontal className="h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10 text-zinc-300">
+                  {canDelete && (
+                    <DropdownMenuItem className="text-red-400 cursor-pointer focus:bg-white/5 focus:text-red-400" onClick={handleDelete} disabled={isDeleting}>
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete Post
+                    </DropdownMenuItem>
+                  )}
+                  <ReportDialog
+                    postId={post.id}
+                    trigger={
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer focus:bg-white/5 focus:text-zinc-50">
+                        <Flag className="mr-2 h-4 w-4" />
+                        Report Post
+                      </DropdownMenuItem>
+                    }
+                  />
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
-        )}
-      </CardFooter>
-    </Card>
+        </CardHeader>
+
+        <CardContent>
+          <div
+            className="prose prose-invert max-w-none text-base leading-relaxed text-zinc-300 mb-4"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+        </CardContent>
+
+        <CardFooter className="flex flex-col border-t border-white/5 p-0">
+          <div className="flex items-center justify-between w-full p-2 px-4 border-b border-white/5">
+            <div className="flex gap-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`gap-2 h-8 px-3 rounded-full transition-colors group ${isLiked ? "text-rose-400 hover:text-rose-300 hover:bg-rose-400/10" : "text-zinc-400 hover:text-zinc-50 hover:bg-white/5"}`}
+                onClick={handleLike}
+              >
+                <Heart className={`h-4 w-4 transition-colors ${isLiked ? "fill-current" : "group-hover:text-rose-400"}`} />
+                {likeCount > 0 && <span>{likeCount}</span>}
+                <span className="sr-only sm:not-sr-only sm:inline">Like</span>
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-2 h-8 px-3 rounded-full text-zinc-400 hover:text-zinc-50 hover:bg-white/5 transition-colors"
+                onClick={() => setShowComments(!showComments)}
+              >
+                <MessageSquare className="h-4 w-4" />
+                {post.comments.length > 0 && <span>{post.comments.length}</span>}
+                <span className="sr-only sm:not-sr-only sm:inline">Comment</span>
+              </Button>
+            </div>
+          </div>
+
+          {showComments && (
+            <div className="w-full bg-black/20 p-4 space-y-4 rounded-b-2xl">
+              {/* Comment Form */}
+              <div className="flex gap-3">
+                <Avatar className="h-8 w-8 border border-white/10">
+                  <AvatarFallback className="bg-zinc-800 text-zinc-300">U</AvatarFallback>
+                </Avatar>
+                <div className="flex-1 gap-2 flex flex-col">
+                  <Textarea
+                    placeholder="Write a comment..."
+                    className="min-h-[60px] resize-none bg-zinc-900/50 border-white/10 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-zinc-700"
+                    value={commentContent}
+                    onChange={(e) => setCommentContent(e.target.value)}
+                  />
+                  <div className="flex justify-end">
+                    <Button size="sm" onClick={handleCommentSubmit} disabled={isSubmitting || !commentContent.trim()} className="bg-zinc-50 text-zinc-950 hover:bg-zinc-200 rounded-full font-medium">
+                      {isSubmitting ? "Posting..." : "Post"}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Comments List */}
+              <div className="space-y-4 pt-4">
+                {post.comments.map((comment: PostComment) => (
+                  <div key={comment.id} className="flex gap-3">
+                    <Avatar className="h-8 w-8 border border-white/10">
+                      <AvatarImage src={comment.author.profileImage || ""} />
+                      <AvatarFallback className="bg-zinc-800 text-zinc-300">{comment.author.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <div className="bg-zinc-900/50 border border-white/5 p-3 rounded-2xl rounded-tl-sm text-sm text-zinc-300">
+                        <div className="font-medium text-zinc-100 mb-1 flex justify-between items-center">
+                          <span>{comment.author.name}</span>
+                          <ReportDialog
+                            commentId={comment.id}
+                            trigger={
+                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-full">
+                                <Flag className="h-3 w-3" />
+                              </Button>
+                            }
+                          />
+                        </div>
+                        <p className="leading-relaxed">{comment.content}</p>
+                      </div>
+                      <div className="flex items-center gap-4 mt-1 pl-1 text-xs text-zinc-500">
+                        <span>{formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </CardFooter>
+      </GlassCard>
+    </StaggerItem>
   );
 }

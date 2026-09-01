@@ -32,12 +32,15 @@ export default async function FeedPage() {
   });
 
   return (
-    <div className="max-w-3xl mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-8">Community Feed</h1>
+    <div className="max-w-2xl mx-auto py-8">
+      <div className="mb-12 text-center">
+        <h1 className="text-3xl font-medium tracking-tight mb-2">Community Feed</h1>
+        <p className="text-zinc-400">Share your research, ask questions, and connect.</p>
+      </div>
 
       <CreatePost />
 
-      <div className="space-y-6">
+      <div className="space-y-8 mt-12">
         {posts.map((post) => (
           <PostCard
             key={post.id}
@@ -47,7 +50,7 @@ export default async function FeedPage() {
           />
         ))}
         {posts.length === 0 && (
-          <p className="text-center text-muted-foreground py-12">No posts yet. Be the first to share something!</p>
+          <p className="text-center text-zinc-500 py-12">No posts yet. Be the first to share something!</p>
         )}
       </div>
     </div>

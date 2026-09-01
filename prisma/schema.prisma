@@ -36,6 +36,15 @@ model User {
   bio           String?
   department    String     @default("Physics")
 
+  // Portfolio fields
+  coverImage    String?
+  socialLinks   Json?
+  education     Json?
+  experience    Json?
+  projects      Json?
+  publications  Json?
+  achievements  Json?
+
   // Student-specific
   studentId     String?
   batch         String?

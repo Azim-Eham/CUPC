@@ -75,7 +75,7 @@ export default async function LandingPage() {
             </p>
 
             <div data-hero-cta className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-6 w-full">
-              <Link href="/register" className="inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-base font-bold px-8 py-3.5 rounded-full transition-all hover:bg-[#f5b942] group">
+              <Link href="/register" className="inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-base font-bold px-8 py-3.5 rounded-full transition-all hover:bg-[#12172e] hover:text-white hover:shadow-lg hover:-translate-y-1 group">
                 Join the Community <ChevronRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Link>
               <button className="inline-flex items-center justify-center text-white/90 text-base font-bold transition-all hover:text-white group">
@@ -202,7 +202,7 @@ export default async function LandingPage() {
                 Connect with distinguished alumni who are ready to offer their expertise and guidance.
               </p>
             </div>
-            <Link data-anim="mentors-cta" href="/mentors" className="hidden md:inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-neutral-50 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all group shrink-0">
+            <Link data-anim="mentors-cta" href="/mentors" className="hidden md:inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-brand-navy hover:text-white hover:border-brand-navy hover:shadow-[0_8px_20px_-4px_rgba(18,23,46,0.2)] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all duration-300 group shrink-0">
               View All Mentors <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
@@ -214,7 +214,7 @@ export default async function LandingPage() {
                 return (
                   <Link
                     key={mentor.id}
-                    href={`/mentors/${mentor.id}`}
+                    href={`/profile/${mentor.id}`}
                     className="bg-white border border-[#e2e2ea] rounded-[2rem] p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col sm:flex-row sm:items-center gap-8 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:border-brand-navy/20 transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#12172e]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -255,7 +255,7 @@ export default async function LandingPage() {
           )}
 
           <div className="mt-10 md:hidden flex justify-center">
-            <Link href="/mentors" className="inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-neutral-50 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all group">
+            <Link href="/mentors" className="inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-brand-navy hover:text-white hover:border-brand-navy hover:shadow-[0_8px_20px_-4px_rgba(18,23,46,0.2)] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all duration-300 group">
               View All Mentors <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
@@ -276,7 +276,7 @@ export default async function LandingPage() {
                   Learn from the minds shaping the future of physics at the University of Chittagong.
                 </p>
               </div>
-              <Link href="/faculty" className="hidden md:inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#f5b942] transition-all group shrink-0">
+              <Link href="/faculty" className="hidden md:inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-sm font-bold px-6 py-2.5 rounded-full hover:bg-brand-navy hover:text-white hover:shadow-[0_8px_20px_-4px_rgba(18,23,46,0.3)] hover:-translate-y-1 transition-all duration-300 group shrink-0">
                 View All Faculty <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -315,7 +315,7 @@ export default async function LandingPage() {
             )}
 
             <div className="mt-12 md:hidden flex justify-center">
-              <Link href="/faculty" className="inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#f5b942] transition-all group">
+              <Link href="/faculty" className="inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-sm font-bold px-6 py-2.5 rounded-full hover:bg-brand-navy hover:text-white hover:shadow-[0_8px_20px_-4px_rgba(18,23,46,0.3)] hover:-translate-y-1 transition-all duration-300 group">
                 View All Faculty <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -336,7 +336,7 @@ export default async function LandingPage() {
                   Participate in seminars, workshops, and meetups organized by CUPC.
                 </p>
               </div>
-              <Link href="/events" className="hidden md:inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-neutral-50 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all group shrink-0">
+              <Link href="/events" className="hidden md:inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-brand-navy hover:text-white hover:border-brand-navy hover:shadow-[0_8px_20px_-4px_rgba(18,23,46,0.2)] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all duration-300 group shrink-0">
                 View All Events <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -361,7 +361,7 @@ export default async function LandingPage() {
             </div>
 
             <div className="mt-10 md:hidden flex justify-center">
-              <Link href="/events" className="inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-neutral-50 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all group">
+              <Link href="/events" className="inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-brand-navy hover:text-white hover:border-brand-navy hover:shadow-[0_8px_20px_-4px_rgba(18,23,46,0.2)] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all duration-300 group">
                 View All Events <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>

@@ -1,7 +1,9 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Award, Trophy, Star } from "lucide-react";
+import { GlassCard } from "@/components/ui/glass-card";
+import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
 
 // Mock data for achievements. In a real app, this would be in the database.
 const ACHIEVEMENTS = [
@@ -37,35 +39,37 @@ export default async function AchievementsPage() {
 
   return (
     <div className="max-w-4xl mx-auto py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Club Achievements</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+      <div className="text-center mb-16">
+        <h1 className="text-3xl font-medium tracking-tight mb-4">Club Achievements</h1>
+        <p className="text-zinc-400 max-w-2xl mx-auto">
           Celebrating the excellence, hard work, and dedication of the Chittagong University Physics Club community.
         </p>
       </div>
 
-      <div className="space-y-6">
+      <StaggerReveal className="space-y-6">
         {ACHIEVEMENTS.map((achievement) => (
-          <Card key={achievement.id} className="overflow-hidden">
-            <div className="flex flex-col md:flex-row">
-              <div className="bg-primary/5 p-8 flex items-center justify-center md:w-48 shrink-0 border-b md:border-b-0 md:border-r">
-                {achievement.type === "trophy" && <Trophy className="h-16 w-16 text-primary" />}
-                {achievement.type === "star" && <Star className="h-16 w-16 text-primary" />}
-                {achievement.type === "award" && <Award className="h-16 w-16 text-primary" />}
+          <StaggerItem key={achievement.id}>
+            <GlassCard className="overflow-hidden group hover:border-white/20 transition-colors">
+              <div className="flex flex-col md:flex-row">
+                <div className="bg-black/20 p-8 flex items-center justify-center md:w-48 shrink-0 border-b md:border-b-0 md:border-r border-white/5">
+                  {achievement.type === "trophy" && <Trophy className="h-12 w-12 text-amber-500/80 group-hover:scale-110 transition-transform duration-500" strokeWidth={1.5} />}
+                  {achievement.type === "star" && <Star className="h-12 w-12 text-amber-500/80 group-hover:scale-110 transition-transform duration-500" strokeWidth={1.5} />}
+                  {achievement.type === "award" && <Award className="h-12 w-12 text-amber-500/80 group-hover:scale-110 transition-transform duration-500" strokeWidth={1.5} />}
+                </div>
+                <div className="flex-1 p-2">
+                  <CardHeader>
+                    <div className="text-xs font-mono text-zinc-500 mb-2">{new Date(achievement.date).getFullYear()}</div>
+                    <CardTitle className="text-xl font-medium text-zinc-50">{achievement.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-zinc-400 leading-relaxed">{achievement.description}</p>
+                  </CardContent>
+                </div>
               </div>
-              <div className="flex-1">
-                <CardHeader>
-                  <div className="text-sm font-medium text-muted-foreground mb-1">{new Date(achievement.date).getFullYear()}</div>
-                  <CardTitle className="text-2xl">{achievement.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{achievement.description}</p>
-                </CardContent>
-              </div>
-            </div>
-          </Card>
+            </GlassCard>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerReveal>
     </div>
   );
 }

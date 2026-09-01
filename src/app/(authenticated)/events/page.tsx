@@ -1,9 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
 import { CalendarIcon, MapPin } from "lucide-react";
+import { GlassCard } from "@/components/ui/glass-card";
+import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
 
 export default async function EventsPage() {
   const session = await auth();
@@ -21,68 +23,75 @@ export default async function EventsPage() {
   const pastEvents = events.filter((e) => new Date(e.date) < new Date());
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-8">Events</h1>
+    <div className="max-w-5xl mx-auto py-8">
+      <div className="mb-12 text-center">
+        <h1 className="text-3xl font-medium tracking-tight mb-2">Events</h1>
+        <p className="text-zinc-400">Discover and register for upcoming physics seminars, workshops, and competitions.</p>
+      </div>
 
-      <div className="space-y-12">
+      <div className="space-y-16">
         <div>
-          <h2 className="text-2xl font-semibold mb-6">Upcoming Events</h2>
+          <h2 className="text-xl font-medium text-zinc-300 mb-8 border-b border-white/5 pb-2">Upcoming Events</h2>
           {upcomingEvents.length === 0 ? (
-            <p className="text-muted-foreground">No upcoming events scheduled.</p>
+            <p className="text-zinc-500 text-center py-12">No upcoming events scheduled.</p>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2">
+            <StaggerReveal className="grid gap-6 md:grid-cols-2">
               {upcomingEvents.map((event) => (
-                <Card key={event.id} className="overflow-hidden border-primary/20">
-                  <CardHeader className="bg-primary/5 pb-4">
-                    <div className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">
-                      {event.category}
-                    </div>
-                    <CardTitle>{event.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-4 space-y-4">
-                    <p className="text-sm text-muted-foreground line-clamp-3">
-                      {event.description}
-                    </p>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        <CalendarIcon className="h-4 w-4 text-muted-foreground" />
-                        <span>{format(new Date(event.date), "PPP 'at' p")}</span>
+                <StaggerItem key={event.id}>
+                  <GlassCard className="h-full flex flex-col hover:-translate-y-1 hover:border-white/20 transition-all duration-300 group">
+                    <CardHeader className="bg-black/10 pb-4 border-b border-white/5">
+                      <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-widest mb-3">
+                        {event.category}
                       </div>
-                      {event.venue && (
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-muted-foreground" />
-                          <span>{event.venue}</span>
+                      <CardTitle className="text-xl leading-tight text-zinc-50 group-hover:text-amber-100 transition-colors">{event.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-6 space-y-6 flex-1 flex flex-col">
+                      <p className="text-sm text-zinc-400 leading-relaxed line-clamp-3 flex-1">
+                        {event.description}
+                      </p>
+                      <div className="space-y-3 text-sm pt-4 border-t border-white/5">
+                        <div className="flex items-center gap-3 text-zinc-300">
+                          <CalendarIcon className="h-4 w-4 text-amber-500/70" />
+                          <span>{format(new Date(event.date), "PPP 'at' p")}</span>
                         </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                        {event.venue && (
+                          <div className="flex items-center gap-3 text-zinc-300">
+                            <MapPin className="h-4 w-4 text-amber-500/70" />
+                            <span>{event.venue}</span>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </GlassCard>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerReveal>
           )}
         </div>
 
         {pastEvents.length > 0 && (
           <div>
-            <h2 className="text-2xl font-semibold mb-6">Past Events</h2>
-            <div className="grid gap-6 md:grid-cols-2 opacity-75">
+            <h2 className="text-xl font-medium text-zinc-500 mb-8 border-b border-white/5 pb-2">Past Events</h2>
+            <StaggerReveal className="grid gap-6 md:grid-cols-3 opacity-60 hover:opacity-100 transition-opacity duration-300">
               {pastEvents.map((event) => (
-                <Card key={event.id}>
-                  <CardHeader className="pb-4">
-                    <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                      {event.category}
-                    </div>
-                    <CardTitle className="text-base">{event.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0 space-y-2 text-sm">
-                    <div className="flex items-center gap-2">
-                      <CalendarIcon className="h-4 w-4 text-muted-foreground" />
-                      <span>{format(new Date(event.date), "PPP")}</span>
-                    </div>
-                  </CardContent>
-                </Card>
+                <StaggerItem key={event.id}>
+                  <GlassCard className="h-full bg-zinc-900/20">
+                    <CardHeader className="pb-4">
+                      <div className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-2">
+                        {event.category}
+                      </div>
+                      <CardTitle className="text-base text-zinc-400">{event.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-0 space-y-2 text-sm">
+                      <div className="flex items-center gap-2 text-zinc-500">
+                        <CalendarIcon className="h-4 w-4" />
+                        <span>{format(new Date(event.date), "PPP")}</span>
+                      </div>
+                    </CardContent>
+                  </GlassCard>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerReveal>
           </div>
         )}
       </div>

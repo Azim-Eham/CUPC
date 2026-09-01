@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { createPost } from "@/app/actions/post";
 import { toast } from "sonner";
 import { Bold, Italic, Strikethrough, Code, Heading1, Heading2, List, ListOrdered, Quote } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
+import { GlassCard } from "@/components/ui/glass-card";
 
 export function CreatePost() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -17,7 +18,7 @@ export function CreatePost() {
     content: "",
     editorProps: {
       attributes: {
-        class: "min-h-[150px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 prose dark:prose-invert max-w-none",
+        class: "min-h-[120px] w-full bg-transparent px-2 py-2 text-base text-zinc-300 placeholder:text-zinc-600 focus-visible:outline-none prose prose-invert max-w-none border-0",
       },
     },
   });
@@ -55,45 +56,45 @@ export function CreatePost() {
   };
 
   return (
-    <Card className="mb-6 overflow-hidden">
+    <GlassCard className="mb-8">
       <CardContent className="p-0">
-        <div className="flex flex-wrap items-center gap-1 border-b bg-muted/50 p-2">
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleAction(() => editor.chain().focus().toggleBold().run())} data-active={editor.isActive("bold") ? "" : undefined}>
+        <div className="flex flex-wrap items-center gap-1 border-b border-white/5 bg-black/10 p-2">
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5" onClick={toggleAction(() => editor.chain().focus().toggleBold().run())} data-active={editor.isActive("bold") ? "" : undefined}>
             <Bold className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleAction(() => editor.chain().focus().toggleItalic().run())} data-active={editor.isActive("italic") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5" onClick={toggleAction(() => editor.chain().focus().toggleItalic().run())} data-active={editor.isActive("italic") ? "" : undefined}>
             <Italic className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleAction(() => editor.chain().focus().toggleStrike().run())} data-active={editor.isActive("strike") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5" onClick={toggleAction(() => editor.chain().focus().toggleStrike().run())} data-active={editor.isActive("strike") ? "" : undefined}>
             <Strikethrough className="h-4 w-4" />
           </Button>
-          <div className="mx-1 h-4 w-[1px] bg-border" />
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleAction(() => editor.chain().focus().toggleHeading({ level: 1 }).run())} data-active={editor.isActive("heading", { level: 1 }) ? "" : undefined}>
+          <div className="mx-2 h-4 w-[1px] bg-white/10" />
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5" onClick={toggleAction(() => editor.chain().focus().toggleHeading({ level: 1 }).run())} data-active={editor.isActive("heading", { level: 1 }) ? "" : undefined}>
             <Heading1 className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleAction(() => editor.chain().focus().toggleHeading({ level: 2 }).run())} data-active={editor.isActive("heading", { level: 2 }) ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5" onClick={toggleAction(() => editor.chain().focus().toggleHeading({ level: 2 }).run())} data-active={editor.isActive("heading", { level: 2 }) ? "" : undefined}>
             <Heading2 className="h-4 w-4" />
           </Button>
-          <div className="mx-1 h-4 w-[1px] bg-border" />
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleAction(() => editor.chain().focus().toggleBulletList().run())} data-active={editor.isActive("bulletList") ? "" : undefined}>
+          <div className="mx-2 h-4 w-[1px] bg-white/10" />
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5" onClick={toggleAction(() => editor.chain().focus().toggleBulletList().run())} data-active={editor.isActive("bulletList") ? "" : undefined}>
             <List className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleAction(() => editor.chain().focus().toggleOrderedList().run())} data-active={editor.isActive("orderedList") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5" onClick={toggleAction(() => editor.chain().focus().toggleOrderedList().run())} data-active={editor.isActive("orderedList") ? "" : undefined}>
             <ListOrdered className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={toggleAction(() => editor.chain().focus().toggleBlockquote().run())} data-active={editor.isActive("blockquote") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5" onClick={toggleAction(() => editor.chain().focus().toggleBlockquote().run())} data-active={editor.isActive("blockquote") ? "" : undefined}>
             <Quote className="h-4 w-4" />
           </Button>
         </div>
         <div className="p-4">
           <EditorContent editor={editor} />
         </div>
-        <div className="flex items-center justify-end border-t bg-muted/20 p-3">
-          <Button onClick={handleSubmit} disabled={isSubmitting}>
+        <div className="flex items-center justify-end border-t border-white/5 bg-black/10 p-3">
+          <Button onClick={handleSubmit} disabled={isSubmitting} className="bg-zinc-50 text-zinc-950 hover:bg-zinc-200 rounded-full font-medium">
             {isSubmitting ? "Posting..." : "Post"}
           </Button>
         </div>
       </CardContent>
-    </Card>
+    </GlassCard>
   );
 }
