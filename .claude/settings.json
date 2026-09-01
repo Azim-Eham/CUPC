@@ -1,0 +1,1 @@
+{"permissions": {"allow": ["Bash(grep -rl *)", "Bash(npm run build)", "Bash(cat << \"EOF\" > *)", "Bash(node *)", "Bash(git add *)", "Bash(git commit *)"]}}

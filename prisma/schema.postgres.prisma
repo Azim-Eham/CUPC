@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum Role {
+  STUDENT
+  ALUMNI
+  FACULTY
+  ADMIN
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  passwordHash  String
+  name          String
+  role          Role
+  status        UserStatus @default(PENDING)
+
+  // Common profile fields
+  phone         String?
+  profileImage  String?
+  bio           String?
+  department    String     @default("Physics")
+
+  // Student-specific
+  studentId     String?
+  batch         String?
+  session       String?
+
+  // Alumni-specific
+  graduationYear  Int?
+  currentPosition String?
+  organization    String?
+
+  // Faculty-specific
+  designation     String?
+  researchAreas   String[]
+
+  // Mentorship
+  availableForMentorship Boolean @default(false)
+  mentorExpertise        String[]
+
+  // Relations
+  posts           Post[]
+  comments        Comment[]
+  reactions       Reaction[]
+  resources       Resource[]
+  events          Event[]
+  sentRequests    MentorshipRequest[] @relation("MentorshipRequester")
+  receivedRequests MentorshipRequest[] @relation("MentorshipMentor")
+  notifications   Notification[]
+  reports         Report[]       @relation("Reporter")
+  reportedContent Report[]       @relation("ReportedUser")
+
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  content     String
+  images      String[]
+  authorId    String
+  author      User       @relation(fields: [authorId], references: [id])
+  comments    Comment[]
+  reactions   Reaction[]
+  reports     Report[]
+  isRemoved   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentId  String?
+  parent    Comment? @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+  reports   Report[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Reaction {
+  id        String   @id @default(cuid())
+  type      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId, type])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  endDate     DateTime?
+  venue       String?
+  link        String?
+  coverImage  String?
+  category    String
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Resource {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  fileUrl     String
+  fileType    String
+  category    String
+  tags        String[]
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  downloads   Int      @default(0)
+  reports     Report[]
+  isRemoved   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MentorshipRequest {
+  id          String   @id @default(cuid())
+  requesterId String
+  requester   User     @relation("MentorshipRequester", fields: [requesterId], references: [id])
+  mentorId    String
+  mentor      User     @relation("MentorshipMentor", fields: [mentorId], references: [id])
+  message     String
+  status      String   @default("PENDING") // PENDING, ACCEPTED, DECLINED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  type      String
+  title     String
+  message   String
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Report {
+  id            String   @id @default(cuid())
+  reason        String
+  reporterId    String
+  reporter      User     @relation("Reporter", fields: [reporterId], references: [id])
+  reportedUserId String?
+  reportedUser  User?    @relation("ReportedUser", fields: [reportedUserId], references: [id])
+  postId        String?
+  post          Post?    @relation(fields: [postId], references: [id])
+  commentId     String?
+  comment       Comment? @relation(fields: [commentId], references: [id])
+  resourceId    String?
+  resource      Resource? @relation(fields: [resourceId], references: [id])
+  status        String   @default("PENDING") // PENDING, REVIEWED, DISMISSED
+  reviewedAt    DateTime?
+  createdAt     DateTime @default(now())
+}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, Calendar, Users, Mail, Globe, MapPin, Network, GraduationCap, Microscope } from "lucide-react";
+import { ChevronRight, Play, Calendar, Users, Mail, Globe, MapPin, Network, GraduationCap, Microscope } from "lucide-react";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 
@@ -46,52 +46,59 @@ const events = [
 
 import { PublicNavbar } from "@/components/public-navbar";
 import { HeroBackground } from "@/components/hero-background";
+import { ScrollAnimations } from "@/components/scroll-animations";
 
 export default async function LandingPage() {
   const mentors = await getFeaturedMentors();
   return (
     <div className="min-h-screen bg-surface-base flex flex-col font-sans">
+      <ScrollAnimations />
       <PublicNavbar isAbsolute={true} />
 
       {/* 1. Header (sits on dark hero) */}
-      <main className="flex-1 flex flex-col w-full">
+      <main id="top" className="flex-1 flex flex-col w-full">
 
         {/* 2. Hero */}
         <section className="w-full relative flex flex-col min-h-[90vh] pb-32 pt-32 overflow-hidden justify-center items-center">
           {/* Background Image */}
           <HeroBackground />
 
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 flex flex-col items-center text-center">
-            <h1 className="font-display text-[64px] md:text-[96px] leading-[1.05] font-extrabold mb-6 max-w-5xl tracking-tight drop-shadow-2xl animate-[fade-in-up_1s_ease-out]">
-              <span className="text-white block bg-clip-text">Chittagong</span>
-              <span className="text-white block">University</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f2a93c] to-[#f5d085] block mt-2 animate-[pulse-glow_4s_ease-in-out_infinite]">Physics Club</span>
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 flex flex-col items-start justify-center pt-20">
+            <h1 className="font-display text-[64px] md:text-[88px] leading-[1.05] font-bold mb-4 max-w-5xl tracking-tight text-left drop-shadow-2xl w-full">
+              <span data-hero-line className="text-white block">Chittagong</span>
+              <span data-hero-line className="text-white block">University</span>
+              <span data-hero-line className="text-[#f2a93c] block">Physics Club</span>
             </h1>
 
-            <p className="text-white/90 text-lg md:text-2xl leading-relaxed max-w-3xl mb-12 drop-shadow-md animate-[fade-in-up_1s_ease-out_0.2s_both] font-medium">
+            <p data-hero-sub className="text-white text-xl md:text-2xl leading-relaxed w-full text-left mb-12 drop-shadow-md font-medium">
               Exploring the Universe Through Physics
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto animate-[fade-in-up_1s_ease-out_0.4s_both]">
-              <Link href="/register" className="inline-flex items-center justify-center bg-gradient-to-r from-[#f2a93c] to-[#f5b942] text-brand-navy text-lg font-bold px-10 py-5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f5b942] focus-visible:ring-offset-2 focus-visible:ring-offset-surface-navy transition-all shadow-[0_4px_20px_rgba(242,169,60,0.6)] hover:shadow-[0_6px_30px_rgba(242,169,60,0.8)] hover:-translate-y-1 group">
+            <div data-hero-cta className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-6 w-full">
+              <Link href="/register" className="inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-base font-bold px-8 py-3.5 rounded-full transition-all hover:bg-[#f5b942] group">
                 Join the Community <ChevronRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Link>
-              
+              <button className="inline-flex items-center justify-center text-white/90 text-base font-bold transition-all hover:text-white group">
+                <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center mr-3 group-hover:border-white/40 transition-colors">
+                  <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+                </div>
+                Watch Intro
+              </button>
             </div>
           </div>
         </section>
 
         {/* 4. About section */}
-        <section className="w-full max-w-7xl mx-auto px-6 py-24 flex flex-col md:flex-row gap-16 items-center">
-          <div className="flex-1 space-y-8 animate-[fade-in_1.5s_ease-out]">
-            <div>
-              <span className="inline-block bg-gradient-to-r from-[#f2a93c]/10 to-transparent text-[#f2a93c] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-[#f2a93c]/20 shadow-sm">About Us</span>
+        <section id="about" className="w-full max-w-7xl mx-auto px-6 py-24 flex flex-col md:flex-row gap-16 items-center">
+          <div className="flex-1 space-y-8">
+            <div data-anim="about-heading">
+              <span className="inline-block bg-[#f2a93c]/10 text-[#f2a93c] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 shadow-sm">About Us</span>
               <h2 className="font-display text-[44px] md:text-[52px] leading-[1.1] font-bold text-brand-navy tracking-tight">
                 Uniting the brilliant minds of CU Physics
               </h2>
             </div>
 
-            <div className="space-y-6 text-text-secondary text-lg leading-relaxed md:text-xl">
+            <div data-anim="about-text" className="space-y-6 text-text-secondary text-lg leading-relaxed md:text-xl">
               <p>
                 The Chittagong University Physics Club (CUPC) is the premier platform dedicated to bridging the gap between current physics students, esteemed faculty, and our accomplished alumni network spread across the globe.
               </p>
@@ -107,9 +114,9 @@ export default async function LandingPage() {
                 "Access to research opportunities",
                 "Academic and career resources"
               ].map((item, i) => (
-                <li key={i} className="flex items-center gap-4 text-brand-navy font-semibold text-lg group">
-                  <div className="w-8 h-8 rounded-full bg-[#12172e]/5 group-hover:bg-[#f2a93c]/20 flex items-center justify-center text-brand-navy group-hover:text-[#f2a93c] transition-colors duration-300 shadow-sm">
-                    <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                <li key={i} data-anim="about-bullet" className="flex items-center gap-3 text-brand-navy font-bold text-sm md:text-base group">
+                  <div className="w-6 h-6 rounded-full bg-transparent border border-[#12172e]/20 flex items-center justify-center text-brand-navy group-hover:border-[#f2a93c] group-hover:text-[#f2a93c] transition-colors duration-300 shadow-sm">
+                    <ChevronRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
                   </div>
                   {item}
                 </li>
@@ -117,13 +124,12 @@ export default async function LandingPage() {
             </ul>
           </div>
 
-          <div className="flex-1 w-full max-w-md">
-            <div className="bg-gradient-to-br from-[#12172e] to-[#1a2149] rounded-[2rem] p-12 flex flex-col items-center justify-center text-center shadow-[0_20px_40px_-10px_rgba(18,23,46,0.3)] relative overflow-hidden group hover:-translate-y-2 transition-transform duration-500 border border-white/5">
+          <div data-anim="about-card" className="flex-1 w-full max-w-md">
+            <div className="bg-[#12172e] rounded-[2rem] p-12 flex flex-col items-center justify-center text-center shadow-[0_20px_40px_-10px_rgba(18,23,46,0.3)] relative overflow-hidden group hover:-translate-y-2 hover:scale-[1.02] duration-300 transition-transform duration-500 border border-white/5">
                <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#f2a93c]/20 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150"></div>
-               <div className="absolute -top-20 -left-20 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl"></div>
-               <Image src="/CUPC_logo.jpg" alt="CUPC" width={112} height={112} className="mb-8 rounded-xl object-contain bg-white p-2 mix-blend-screen opacity-90 shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-transform duration-500 group-hover:scale-110" />
-               <div className="font-display text-3xl font-bold text-text-inverse mb-3 tracking-tight">Established 2026</div>
-               <div className="text-text-inverse-muted text-lg font-medium tracking-wide">University of Chittagong</div>
+               <Image src="/CUPC_logo.jpg" alt="CUPC" width={112} height={112} className="mb-8 rounded-2xl object-contain bg-white p-2 relative z-10" />
+               <div className="font-display text-2xl font-bold text-white mb-2 tracking-tight">Established 2026</div>
+               <div className="text-white/60 text-base">University of Chittagong</div>
             </div>
           </div>
         </section>
@@ -132,8 +138,8 @@ export default async function LandingPage() {
         <section className="w-full relative py-32 mt-12 overflow-hidden">
           <div className="absolute inset-0 bg-surface-alt -skew-y-3 origin-top-left z-0"></div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-            <span className="inline-block bg-[#12172e]/5 text-[#12172e] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 shadow-sm">Features</span>
+          <div data-anim="features-heading" className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+            <span className="inline-block border border-[#e2e2ea] text-text-secondary text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-sm bg-white">Features</span>
             <h2 className="font-display text-[44px] md:text-[52px] leading-[1.1] font-bold text-brand-navy mb-6 max-w-3xl mx-auto tracking-tight">
               Empowering your physics journey
             </h2>
@@ -141,9 +147,9 @@ export default async function LandingPage() {
               We provide the tools, network, and resources you need to excel in your academic pursuits and professional career.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+            <div data-anim="features-grid" className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
               {/* Feature 1 */}
-              <div className="flex flex-col items-center bg-white p-10 rounded-[2rem] border border-neutral-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2 group relative overflow-hidden">
+              <div data-anim="feature-card" className="flex flex-col items-center bg-white p-10 rounded-[2rem] border border-neutral-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 group relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#12172e]/5 to-transparent rounded-bl-full -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="w-20 h-20 rounded-2xl bg-[#12172e]/5 group-hover:bg-[#12172e]/10 flex items-center justify-center mb-8 transition-colors duration-300 relative z-10">
                   <Network className="w-10 h-10 text-[#12172e]" />
@@ -155,7 +161,7 @@ export default async function LandingPage() {
               </div>
 
               {/* Feature 2 */}
-              <div className="flex flex-col items-center bg-white p-10 rounded-[2rem] border border-neutral-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2 group relative overflow-hidden">
+              <div data-anim="feature-card" className="flex flex-col items-center bg-white p-10 rounded-[2rem] border border-neutral-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 group relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#f2a93c]/10 to-transparent rounded-bl-full -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="w-20 h-20 rounded-2xl bg-[#f2a93c]/10 group-hover:bg-[#f2a93c]/20 flex items-center justify-center mb-8 transition-colors duration-300 relative z-10">
                   <GraduationCap className="w-10 h-10 text-[#f2a93c]" />
@@ -167,7 +173,7 @@ export default async function LandingPage() {
               </div>
 
               {/* Feature 3 */}
-              <div className="flex flex-col items-center bg-white p-10 rounded-[2rem] border border-neutral-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2 group relative overflow-hidden">
+              <div data-anim="feature-card" className="flex flex-col items-center bg-white p-10 rounded-[2rem] border border-neutral-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1.5 group relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-teal-500/10 to-transparent rounded-bl-full -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="w-20 h-20 rounded-2xl bg-teal-500/10 group-hover:bg-teal-500/20 flex items-center justify-center mb-8 transition-colors duration-300 relative z-10">
                   <Microscope className="w-10 h-10 text-teal-600" />
@@ -182,13 +188,13 @@ export default async function LandingPage() {
         </section>
 
         {/* 6. Mentors Section */}
-        <section className="w-full max-w-7xl mx-auto px-6 py-32 relative">
+        <section id="mentors" className="w-full max-w-7xl mx-auto px-6 py-32 relative">
           {/* Decorative background element */}
           <div className="absolute top-1/2 right-0 w-64 h-64 bg-[#f2a93c]/5 rounded-full blur-3xl -z-10"></div>
 
-          <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div data-anim="mentors-heading" className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div>
-              <span className="inline-block bg-[#f2a93c]/10 text-[#f2a93c] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">Mentorship</span>
+              <span className="inline-block border border-[#e2e2ea] text-[#f2a93c] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-sm bg-[#f2a93c]/5">Mentorship</span>
               <h2 className="font-display text-[44px] md:text-[52px] leading-[1.1] font-bold text-brand-navy max-w-xl mb-6 tracking-tight">
                 Learn from those who paved the way
               </h2>
@@ -196,13 +202,13 @@ export default async function LandingPage() {
                 Connect with distinguished alumni who are ready to offer their expertise and guidance.
               </p>
             </div>
-            <Link href="/mentors" className="hidden md:inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-neutral-50 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all group shrink-0">
+            <Link data-anim="mentors-cta" href="/mentors" className="hidden md:inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-neutral-50 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy transition-all group shrink-0">
               View All Mentors <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
 
           {mentors.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div data-anim="mentors-content" className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {mentors.map((mentor, index) => {
                 const initials = mentor.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                 return (
@@ -239,7 +245,7 @@ export default async function LandingPage() {
               })}
             </div>
           ) : (
-            <div className="w-full py-20 text-center bg-surface-alt rounded-[2rem] border border-dashed border-neutral-300">
+            <div data-anim="mentors-content" className="w-full py-20 text-center bg-surface-alt rounded-[2rem] border border-dashed border-neutral-300">
               <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
                 <Users className="w-8 h-8 text-neutral-400" />
               </div>
@@ -256,13 +262,13 @@ export default async function LandingPage() {
         </section>
 
         {/* 6.5 Faculty Section */}
-        <section className="w-full bg-surface-navy py-32 relative overflow-hidden">
+        <section id="faculty" className="w-full bg-surface-navy py-32 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
           <div className="max-w-7xl mx-auto px-6 relative z-10">
-            <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8 text-center md:text-left">
+            <div data-anim="faculty-heading" className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8 text-center md:text-left">
               <div>
-                <span className="inline-block bg-white/10 text-white/80 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-white/20 backdrop-blur-sm">Department</span>
+                <span className="inline-block border border-white/20 text-white/80 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm bg-white/5">Department</span>
                 <h2 className="font-display text-[44px] md:text-[52px] leading-[1.1] font-bold text-white max-w-xl mb-6 tracking-tight">
                   Distinguished Faculty
                 </h2>
@@ -270,17 +276,17 @@ export default async function LandingPage() {
                   Learn from the minds shaping the future of physics at the University of Chittagong.
                 </p>
               </div>
-              <Link href="/faculty" className="hidden md:inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-[#f5b942] hover:shadow-[0_0_20px_rgba(242,169,60,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white transition-all group shrink-0">
-                View All Faculty <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              <Link href="/faculty" className="hidden md:inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#f5b942] transition-all group shrink-0">
+                View All Faculty <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
 
             {faculty.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              <div className="flex flex-row overflow-x-auto lg:grid lg:grid-cols-5 gap-4 pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 scrollbar-hide">
                 {faculty.map((member, i) => {
                   const initials = member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                   return (
-                    <div key={i} className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col items-center text-center gap-5 group hover:-translate-y-2 relative overflow-hidden">
+                    <div key={i} data-anim="faculty-card" className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col items-center text-center gap-5 group hover:-translate-y-1.5 relative overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#f2a93c]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                       {member.imageUrl ? (
@@ -309,20 +315,20 @@ export default async function LandingPage() {
             )}
 
             <div className="mt-12 md:hidden flex justify-center">
-              <Link href="/faculty" className="inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-sm font-bold px-8 py-4 rounded-full hover:bg-[#f5b942] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white transition-all group shadow-[0_0_20px_rgba(242,169,60,0.3)]">
-                View All Faculty <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              <Link href="/faculty" className="inline-flex items-center justify-center bg-[#f2a93c] text-brand-navy text-sm font-bold px-6 py-2.5 rounded-full hover:bg-[#f5b942] transition-all group">
+                View All Faculty <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
           </div>
         </section>
 
         {/* 7. Events Section */}
-        <section className="w-full bg-surface-alt py-32 relative overflow-hidden">
+        <section id="events" className="w-full bg-surface-alt py-32 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#12172e]/5 to-transparent skew-x-12 transform origin-bottom"></div>
           <div className="max-w-7xl mx-auto px-6 relative z-10">
-            <div className="mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div data-anim="events-heading" className="mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-8">
               <div>
-                <span className="inline-block bg-[#f2a93c]/10 text-[#f2a93c] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">Happenings</span>
+                <span className="inline-block border border-[#f2a93c]/20 text-[#f2a93c] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-sm bg-[#f2a93c]/5">Happenings</span>
                 <h2 className="font-display text-[44px] md:text-[52px] leading-[1.1] font-bold text-brand-navy tracking-tight">
                   Upcoming Events
                 </h2>
@@ -337,7 +343,7 @@ export default async function LandingPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {events.map((event, i) => (
-                <div key={i} className="bg-white border border-[#e2e2ea] rounded-[2rem] p-10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-300 group relative overflow-hidden flex flex-col h-full">
+                <div key={i} data-anim="event-card" className="bg-white border border-[#e2e2ea] rounded-[2rem] p-10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden flex flex-col h-full">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#12172e]/5 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                   <div className="flex items-center gap-4 mb-8">
@@ -365,7 +371,7 @@ export default async function LandingPage() {
       </main>
 
       {/* 8. Footer */}
-      <footer className="w-full bg-[#0a0f1d] py-20 pb-[calc(112px+env(safe-area-inset-bottom))] md:pb-20 relative overflow-hidden">
+      <footer data-anim="footer" className="w-full bg-[#0a0f1d] py-20 pb-[calc(112px+env(safe-area-inset-bottom))] md:pb-20 relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#1a2149] rounded-full blur-[100px] opacity-20"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#f2a93c] rounded-full blur-[120px] opacity-5"></div>
@@ -385,15 +391,15 @@ export default async function LandingPage() {
           </div>
 
           <div className="flex items-center gap-10 mb-16">
-            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 transform duration-300">
+            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform duration-300">
               <Globe className="w-7 h-7" />
               <span className="sr-only">Website</span>
             </a>
-            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 transform duration-300">
+            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform duration-300">
               <Mail className="w-7 h-7" />
               <span className="sr-only">Contact</span>
             </a>
-            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 transform duration-300">
+            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform duration-300">
               <MapPin className="w-7 h-7" />
               <span className="sr-only">Location</span>
             </a>
