@@ -6,13 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ChevronRight, Search, Lock } from "lucide-react";
-import { PublicNavbar } from "@/components/public-navbar";
 
 export default async function MentorsDirectoryPage() {
   const session = await auth();
   const isAuthenticated = !!session?.user?.id;
 
-  const mentors = !isAuthenticated ? [] : await prisma.user.findMany({
+  const mentors = await prisma.user.findMany({
     where: {
       status: "APPROVED",
       availableForMentorship: true,
@@ -31,12 +30,10 @@ export default async function MentorsDirectoryPage() {
       graduationYear: true,
       mentorExpertise: true,
     },
-  });
+  }) : [];
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <PublicNavbar />
-      <main className="flex-1 pb-16 md:pb-0 min-h-screen bg-surface-base font-sans">
+    <div className="min-h-screen bg-surface-base font-sans">
       <div className="bg-surface-navy w-full py-16 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div>
@@ -133,7 +130,6 @@ export default async function MentorsDirectoryPage() {
           </div>
         )}
       </div>
-      </main>
     </div>
   );
 }

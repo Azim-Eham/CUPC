@@ -1,0 +1,11 @@
+--- page.tsx
++++ page.tsx
+@@ -11,7 +11,7 @@
+   const session = await auth();
+   const isAuthenticated = !!session?.user?.id;
+ 
+-  const mentors = isAuthenticated ? await prisma.user.findMany({
++  const mentors = isAuthenticated ? (await prisma.user.findMany({
+     where: {
+       status: "APPROVED",
+       availableForMentorship: true,

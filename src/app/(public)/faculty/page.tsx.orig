@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
-import { GraduationCap, Lock } from "lucide-react";
-import { PublicNavbar } from "@/components/public-navbar";
+import { GraduationCap } from "lucide-react";
 
 
 // Hardcoded faculty list matching the homepage section
@@ -18,9 +17,7 @@ export default async function FacultyDirectoryPage() {
   const isAuthenticated = !!session?.user?.id;
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <PublicNavbar />
-      <main className="flex-1 pb-16 md:pb-0 min-h-screen bg-surface-base font-sans">
+    <div className="min-h-screen bg-surface-base font-sans">
       <div className="bg-surface-navy w-full py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-2 mb-4">
@@ -35,16 +32,7 @@ export default async function FacultyDirectoryPage() {
       </div>
 
       <div className="max-w-7xl mx-auto py-16 px-6">
-        {!isAuthenticated ? (
-          <div className="text-center py-24 bg-surface-alt rounded-2xl border border-dashed border-[#e2e2ea]">
-            <Lock className="w-12 h-12 text-[#f2a93c] mx-auto mb-4 opacity-80" />
-            <p className="text-text-primary font-bold text-xl mb-2">Faculty directory is private</p>
-            <p className="text-text-secondary mb-6 max-w-md mx-auto">Please log in to view our faculty directory and connect with department members.</p>
-            <Link href="/login?from=/faculty" className="inline-flex items-center justify-center bg-brand-navy hover:bg-brand-navy/90 text-white font-semibold py-3 px-8 rounded-full transition-colors">
-              Log in to view faculty
-            </Link>
-          </div>
-        ) : faculty.length === 0 ? (
+        {faculty.length === 0 ? (
           <div className="text-center py-24 bg-surface-alt rounded-2xl border border-dashed border-[#e2e2ea]">
             <GraduationCap className="w-12 h-12 text-text-secondary mx-auto mb-4 opacity-50" />
             <p className="text-text-primary font-bold text-lg">No faculty members found</p>
@@ -83,7 +71,6 @@ export default async function FacultyDirectoryPage() {
           </div>
         )}
       </div>
-      </main>
     </div>
   );
 }
