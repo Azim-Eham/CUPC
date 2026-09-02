@@ -7,7 +7,7 @@ import Link from "next/link";
 import { SocialLink } from "@/types/profile";
 
 type ProfileUser = Pick<User, "name" | "role" | "department" | "profileImage" | "bio" | "coverImage" | "email"> & {
-  socialLinks?: any; // Prisma Json type comes out as any/unknown
+  socialLinks?: unknown; // Prisma Json type comes out as any/unknown
   organization?: string | null;
   designation?: string | null;
   graduationYear?: number | null;
@@ -23,7 +23,7 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
   const socialLinks = (user.socialLinks as SocialLink[]) || [];
 
   return (
-    <div className="relative w-full rounded-3xl overflow-hidden bg-zinc-900 border border-white/10 shadow-2xl mb-12">
+    <div className="relative w-full rounded-3xl overflow-hidden bg-white border border-[#e2e2ea] shadow-2xl mb-12">
       {/* Cover Image */}
       <div className="h-48 md:h-64 w-full bg-gradient-to-br from-brand-navy to-black relative">
         {user.coverImage ? (
@@ -44,25 +44,25 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
       <div className="px-6 md:px-12 pb-10 relative">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 -mt-16 md:-mt-20 mb-6">
           <div className="flex items-end gap-6">
-            <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-zinc-900 bg-zinc-800 shadow-xl rounded-2xl">
+            <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-white bg-surface-alt shadow-xl rounded-2xl">
               <AvatarImage src={user.profileImage || ""} className="object-cover" />
-              <AvatarFallback className="text-4xl rounded-2xl bg-zinc-800 text-zinc-400">
+              <AvatarFallback className="text-4xl rounded-2xl bg-surface-alt text-brand-navy">
                 {user.name.charAt(0)}
               </AvatarFallback>
             </Avatar>
             <div className="pb-2">
-              <h1 className="text-3xl md:text-4xl font-display font-bold text-zinc-50 tracking-tight">
+              <h1 className="text-3xl md:text-4xl font-display font-bold text-brand-navy tracking-tight">
                 {user.name}
               </h1>
               <div className="flex flex-wrap items-center gap-3 mt-2">
-                <Badge variant="outline" className={`border-white/10 ${
+                <Badge variant="outline" className={`border-[#e2e2ea] ${
                   user.role === "FACULTY" ? "bg-amber-500/10 text-amber-400" : 
                   user.role === "ALUMNI" ? "bg-teal-500/10 text-teal-400" : 
-                  "bg-white/5 text-zinc-300"
+                  "bg-[#12172e]/5 text-text-secondary"
                 }`}>
                   {user.role}
                 </Badge>
-                <span className="text-sm font-medium text-zinc-400">{user.department}</span>
+                <span className="text-sm font-medium text-brand-navy">{user.department}</span>
               </div>
             </div>
           </div>
@@ -71,14 +71,14 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
             {isSelf ? (
               <Link 
                 href="/profile/edit"
-                className="inline-flex items-center justify-center bg-white text-zinc-950 font-medium px-6 py-2 rounded-full hover:bg-zinc-200 transition-colors text-sm"
+                className="inline-flex items-center justify-center bg-white border border-[#e2e2ea] text-brand-navy hover:shadow-md font-medium px-6 py-2 rounded-full hover:bg-zinc-200 transition-colors text-sm"
               >
                 Edit Profile
               </Link>
             ) : (
               <a 
                 href={`mailto:${user.email}`}
-                className="inline-flex items-center justify-center bg-amber-500 text-zinc-950 font-medium px-6 py-2 rounded-full hover:bg-amber-400 transition-colors text-sm"
+                className="inline-flex items-center justify-center bg-amber-500 text-white hover:shadow-lg font-medium px-6 py-2 rounded-full hover:bg-amber-400 transition-colors text-sm"
               >
                 <Mail className="w-4 h-4 mr-2" />
                 Contact
@@ -87,11 +87,11 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-white/5">
+        <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-[#e2e2ea]">
           <div className="md:col-span-2 space-y-6">
             <div>
-              <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-500 mb-3">About</h3>
-              <p className="text-base text-zinc-300 leading-relaxed whitespace-pre-wrap">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-text-secondary mb-3">About</h3>
+              <p className="text-base text-text-secondary leading-relaxed whitespace-pre-wrap">
                 {user.bio || "No bio provided."}
               </p>
             </div>
@@ -99,11 +99,11 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-500 mb-3">Details</h3>
-              <ul className="space-y-3 text-sm text-zinc-400">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-text-secondary mb-3">Details</h3>
+              <ul className="space-y-3 text-sm text-brand-navy">
                 {user.role === "FACULTY" && user.designation && (
                   <li className="flex items-center gap-3">
-                    <BriefcaseIcon className="w-4 h-4 text-zinc-500" />
+                    <BriefcaseIcon className="w-4 h-4 text-text-secondary" />
                     <span>{user.designation}</span>
                   </li>
                 )}
@@ -111,13 +111,13 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
                   <>
                     {user.organization && (
                       <li className="flex items-center gap-3">
-                        <BriefcaseIcon className="w-4 h-4 text-zinc-500" />
+                        <BriefcaseIcon className="w-4 h-4 text-text-secondary" />
                         <span>{user.organization}</span>
                       </li>
                     )}
                     {user.graduationYear && (
                       <li className="flex items-center gap-3">
-                        <Calendar className="w-4 h-4 text-zinc-500" />
+                        <Calendar className="w-4 h-4 text-text-secondary" />
                         <span>Class of {user.graduationYear}</span>
                       </li>
                     )}
@@ -125,12 +125,12 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
                 )}
                 {user.role === "STUDENT" && user.batch && (
                   <li className="flex items-center gap-3">
-                    <Calendar className="w-4 h-4 text-zinc-500" />
+                    <Calendar className="w-4 h-4 text-text-secondary" />
                     <span>Batch {user.batch}</span>
                   </li>
                 )}
                 <li className="flex items-center gap-3">
-                  <MapPin className="w-4 h-4 text-zinc-500" />
+                  <MapPin className="w-4 h-4 text-text-secondary" />
                   <span>University of Chittagong</span>
                 </li>
               </ul>
@@ -138,7 +138,7 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
 
             {socialLinks.length > 0 && (
               <div>
-                <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-500 mb-3">Links</h3>
+                <h3 className="text-xs font-mono uppercase tracking-widest text-text-secondary mb-3">Links</h3>
                 <div className="flex flex-wrap gap-2">
                   {socialLinks.map((link, i) => (
                     <a 
@@ -146,7 +146,7 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-zinc-300 hover:bg-white/10 transition-colors"
+                      className="px-3 py-1.5 rounded-full bg-[#12172e]/5 border border-[#e2e2ea] text-xs text-text-secondary hover:bg-white/10 transition-colors"
                     >
                       {link.platform}
                     </a>
@@ -162,7 +162,7 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
 }
 
 // Helper icon
-function BriefcaseIcon(props: any) {
+function BriefcaseIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

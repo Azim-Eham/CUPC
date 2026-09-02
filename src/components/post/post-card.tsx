@@ -55,7 +55,7 @@ interface Post {
   comments: PostComment[];
 }
 
-import { GlassCard } from "@/components/ui/glass-card";
+import { AcademicCard } from "@/components/ui/academic-card";
 import { StaggerItem } from "@/components/ui/stagger-reveal";
 
 interface PostCardProps {
@@ -124,33 +124,33 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
 
   return (
     <StaggerItem>
-      <GlassCard className="mb-8">
+      <AcademicCard className="mb-8">
         <CardHeader className="pb-3">
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-3">
-              <Avatar className="border border-white/10">
+              <Avatar className="border border-[#e2e2ea]">
                 <AvatarImage src={post.author.profileImage || ""} />
-                <AvatarFallback className="bg-zinc-800 text-zinc-300">{post.author.name.charAt(0)}</AvatarFallback>
+                <AvatarFallback className="bg-surface-alt text-brand-navy">{post.author.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <div>
-                <CardTitle className="text-base font-semibold text-zinc-50">{post.author.name}</CardTitle>
-                <p className="text-sm text-zinc-500">
+                <CardTitle className="text-base font-semibold text-brand-navy">{post.author.name}</CardTitle>
+                <p className="text-sm text-text-secondary">
                   {post.author.role} • {post.author.department}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-zinc-500">
+              <span className="text-xs text-text-secondary">
                 {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
               </span>
               <DropdownMenu>
-                <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-50 hover:bg-white/5 rounded-full" />}>
+                <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5 rounded-full" />}>
                   <MoreHorizontal className="h-4 w-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-zinc-900 border-white/10 text-zinc-300">
+                <DropdownMenuContent align="end" className="bg-white border-[#e2e2ea] text-text-secondary">
                   {canDelete && (
-                    <DropdownMenuItem className="text-red-400 cursor-pointer focus:bg-white/5 focus:text-red-400" onClick={handleDelete} disabled={isDeleting}>
+                    <DropdownMenuItem className="text-red-500 cursor-pointer focus:bg-red-50 focus:text-red-600" onClick={handleDelete} disabled={isDeleting}>
                       <Trash2 className="mr-2 h-4 w-4" />
                       Delete Post
                     </DropdownMenuItem>
@@ -158,7 +158,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
                   <ReportDialog
                     postId={post.id}
                     trigger={
-                      <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer focus:bg-white/5 focus:text-zinc-50">
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer focus:bg-[#12172e]/5 focus:text-brand-navy">
                         <Flag className="mr-2 h-4 w-4" />
                         Report Post
                       </DropdownMenuItem>
@@ -172,21 +172,21 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
 
         <CardContent>
           <div
-            className="prose prose-invert max-w-none text-base leading-relaxed text-zinc-300 mb-4"
+            className="prose prose-brand max-w-none text-base leading-relaxed text-brand-navy mb-4"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </CardContent>
 
-        <CardFooter className="flex flex-col border-t border-white/5 p-0">
-          <div className="flex items-center justify-between w-full p-2 px-4 border-b border-white/5">
+        <CardFooter className="flex flex-col border-t border-[#e2e2ea] p-0">
+          <div className="flex items-center justify-between w-full p-2 px-4 border-b border-[#e2e2ea]">
             <div className="flex gap-4">
               <Button
                 variant="ghost"
                 size="sm"
-                className={`gap-2 h-8 px-3 rounded-full transition-colors group ${isLiked ? "text-rose-400 hover:text-rose-300 hover:bg-rose-400/10" : "text-zinc-400 hover:text-zinc-50 hover:bg-white/5"}`}
+                className={`gap-2 h-8 px-3 rounded-full transition-colors group ${isLiked ? "text-rose-500 hover:text-rose-600 hover:bg-rose-50" : "text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5"}`}
                 onClick={handleLike}
               >
-                <Heart className={`h-4 w-4 transition-colors ${isLiked ? "fill-current" : "group-hover:text-rose-400"}`} />
+                <Heart className={`h-4 w-4 transition-colors ${isLiked ? "fill-current" : "group-hover:text-rose-500"}`} />
                 {likeCount > 0 && <span>{likeCount}</span>}
                 <span className="sr-only sm:not-sr-only sm:inline">Like</span>
               </Button>
@@ -194,7 +194,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
               <Button
                 variant="ghost"
                 size="sm"
-                className="gap-2 h-8 px-3 rounded-full text-zinc-400 hover:text-zinc-50 hover:bg-white/5 transition-colors"
+                className="gap-2 h-8 px-3 rounded-full text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5 transition-colors"
                 onClick={() => setShowComments(!showComments)}
               >
                 <MessageSquare className="h-4 w-4" />
@@ -205,21 +205,21 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
           </div>
 
           {showComments && (
-            <div className="w-full bg-black/20 p-4 space-y-4 rounded-b-2xl">
+            <div className="w-full bg-surface-alt p-4 space-y-4 rounded-b-2xl">
               {/* Comment Form */}
               <div className="flex gap-3">
-                <Avatar className="h-8 w-8 border border-white/10">
-                  <AvatarFallback className="bg-zinc-800 text-zinc-300">U</AvatarFallback>
+                <Avatar className="h-8 w-8 border border-[#e2e2ea]">
+                  <AvatarFallback className="bg-surface-base text-brand-navy font-medium">U</AvatarFallback>
                 </Avatar>
                 <div className="flex-1 gap-2 flex flex-col">
                   <Textarea
                     placeholder="Write a comment..."
-                    className="min-h-[60px] resize-none bg-zinc-900/50 border-white/10 text-zinc-50 placeholder:text-zinc-500 focus-visible:ring-zinc-700"
+                    className="min-h-[60px] resize-none bg-white border-[#e2e2ea] text-brand-navy placeholder:text-text-secondary focus-visible:ring-brand-navy/20 shadow-sm"
                     value={commentContent}
                     onChange={(e) => setCommentContent(e.target.value)}
                   />
                   <div className="flex justify-end">
-                    <Button size="sm" onClick={handleCommentSubmit} disabled={isSubmitting || !commentContent.trim()} className="bg-zinc-50 text-zinc-950 hover:bg-zinc-200 rounded-full font-medium">
+                    <Button size="sm" onClick={handleCommentSubmit} disabled={isSubmitting || !commentContent.trim()} className="bg-brand-navy text-white hover:bg-brand-navy-light rounded-full font-medium shadow-[0_4px_14px_0_rgba(18,23,46,0.39)] hover:-translate-y-0.5 transition-all">
                       {isSubmitting ? "Posting..." : "Post"}
                     </Button>
                   </div>
@@ -230,26 +230,26 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
               <div className="space-y-4 pt-4">
                 {post.comments.map((comment: PostComment) => (
                   <div key={comment.id} className="flex gap-3">
-                    <Avatar className="h-8 w-8 border border-white/10">
+                    <Avatar className="h-8 w-8 border border-[#e2e2ea]">
                       <AvatarImage src={comment.author.profileImage || ""} />
-                      <AvatarFallback className="bg-zinc-800 text-zinc-300">{comment.author.name.charAt(0)}</AvatarFallback>
+                      <AvatarFallback className="bg-surface-base text-brand-navy font-medium">{comment.author.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
-                      <div className="bg-zinc-900/50 border border-white/5 p-3 rounded-2xl rounded-tl-sm text-sm text-zinc-300">
-                        <div className="font-medium text-zinc-100 mb-1 flex justify-between items-center">
+                      <div className="bg-white border border-[#e2e2ea] p-4 rounded-2xl rounded-tl-sm text-sm text-brand-navy shadow-sm">
+                        <div className="font-semibold text-brand-navy mb-1 flex justify-between items-center">
                           <span>{comment.author.name}</span>
                           <ReportDialog
                             commentId={comment.id}
                             trigger={
-                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-full">
+                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-text-secondary hover:text-red-500 hover:bg-red-50 rounded-full">
                                 <Flag className="h-3 w-3" />
                               </Button>
                             }
                           />
                         </div>
-                        <p className="leading-relaxed">{comment.content}</p>
+                        <p className="leading-relaxed text-text-secondary">{comment.content}</p>
                       </div>
-                      <div className="flex items-center gap-4 mt-1 pl-1 text-xs text-zinc-500">
+                      <div className="flex items-center gap-4 mt-1.5 pl-1 text-xs font-medium text-text-secondary">
                         <span>{formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}</span>
                       </div>
                     </div>
@@ -259,7 +259,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
             </div>
           )}
         </CardFooter>
-      </GlassCard>
+      </AcademicCard>
     </StaggerItem>
   );
 }

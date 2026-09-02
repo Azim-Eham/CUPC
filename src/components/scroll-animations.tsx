@@ -145,12 +145,14 @@ export function ScrollAnimations() {
       });
 
       // Store for cleanup
+      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
       (window as any).__gsapCtx = ctx;
     });
 
     return () => {
       cancelAnimationFrame(raf);
-      const ctx = (window as any).__gsapCtx;
+      const ctx = /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      (window as any).__gsapCtx;
       if (ctx) ctx.revert();
     };
   }, []);

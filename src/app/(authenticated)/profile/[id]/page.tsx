@@ -6,6 +6,7 @@ import { TimelineSection } from "@/components/profile/timeline-section";
 import { ProjectsSection } from "@/components/profile/projects-section";
 import { PublicationsSection } from "@/components/profile/publications-section";
 import { AchievementsSection } from "@/components/profile/achievements-section";
+import { Education, Experience, Project, Publication, Achievement } from "@/types/profile";
 
 export default async function PublicProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
@@ -42,11 +43,11 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
   const isSelf = session.user.id === user.id;
 
   // Type assertions for JSON fields
-  const education = user.education as any;
-  const experience = user.experience as any;
-  const projects = user.projects as any;
-  const publications = user.publications as any;
-  const achievements = user.achievements as any;
+  const education = user.education as unknown as Education[];
+  const experience = user.experience as unknown as Experience[];
+  const projects = user.projects as unknown as Project[];
+  const publications = user.publications as unknown as Publication[];
+  const achievements = user.achievements as unknown as Achievement[];
 
   return (
     <div className="max-w-5xl mx-auto py-8">

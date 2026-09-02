@@ -24,8 +24,8 @@ export default async function EditProfilePage() {
   return (
     <div className="max-w-3xl mx-auto py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-zinc-50 mb-2">Edit Profile</h1>
-        <p className="text-zinc-400">Update your basic information and links.</p>
+        <h1 className="text-3xl font-display font-bold text-brand-navy mb-2">Edit Profile</h1>
+        <p className="text-text-secondary">Update your basic information and links.</p>
       </div>
 
       {/* Passing data to a client component for the form */}

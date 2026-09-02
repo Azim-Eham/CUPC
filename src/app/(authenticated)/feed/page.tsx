@@ -35,7 +35,7 @@ export default async function FeedPage() {
     <div className="max-w-2xl mx-auto py-8">
       <div className="mb-12 text-center">
         <h1 className="text-3xl font-medium tracking-tight mb-2">Community Feed</h1>
-        <p className="text-zinc-400">Share your research, ask questions, and connect.</p>
+        <p className="text-text-secondary">Share your research, ask questions, and connect.</p>
       </div>
 
       <CreatePost />
@@ -50,7 +50,7 @@ export default async function FeedPage() {
           />
         ))}
         {posts.length === 0 && (
-          <p className="text-center text-zinc-500 py-12">No posts yet. Be the first to share something!</p>
+          <p className="text-center text-text-secondary py-12">No posts yet. Be the first to share something!</p>
         )}
       </div>
     </div>
