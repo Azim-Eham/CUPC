@@ -19,6 +19,7 @@ export async function PUT(req: Request) {
         department: data.department,
         coverImage: data.coverImage,
         profileImage: data.profileImage,
+        availableForMentorship: typeof data.availableForMentorship === 'boolean' ? data.availableForMentorship : undefined,
         // Extend here to update json arrays for portfolio
       },
     });

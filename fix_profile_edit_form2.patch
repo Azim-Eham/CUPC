@@ -1,0 +1,35 @@
+--- src/app/(authenticated)/profile/edit/edit-form.tsx
++++ src/app/(authenticated)/profile/edit/edit-form.tsx
+@@ -75,6 +75,32 @@
+           </div>
+         </div>
+ 
++        {initialData.role === "ALUMNI" && (
++          <div className="space-y-4 pt-4">
++            <h3 className="text-lg font-medium text-brand-navy border-b border-[#e2e2ea] pb-2">Mentorship</h3>
++            
++            <div className="flex items-start space-x-3 pt-2">
++              <div className="flex items-center h-5">
++                <input
++                  id="availableForMentorship"
++                  type="checkbox"
++                  checked={formData.availableForMentorship}
++                  onChange={e => setFormData({...formData, availableForMentorship: e.target.checked})}
++                  className="w-4 h-4 text-amber-500 bg-white border-[#e2e2ea] rounded focus:ring-amber-500 focus:ring-2"
++                />
++              </div>
++              <div className="flex flex-col">
++                <Label htmlFor="availableForMentorship" className="text-brand-navy font-semibold cursor-pointer">
++                  Available for Mentorship
++                </Label>
++                <p className="text-xs text-text-secondary mt-1">
++                  Allow students to find you in the mentor directory and request mentorship.
++                </p>
++              </div>
++            </div>
++          </div>
++        )}
++
+         <div className="pt-6 flex gap-4">
+           <Button 
+             type="submit" 

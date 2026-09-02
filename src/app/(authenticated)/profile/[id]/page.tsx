@@ -23,6 +23,7 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
       department: true,
       profileImage: true,
       coverImage: true,
+      availableForMentorship: true,
       bio: true,
       designation: true,
       organization: true,

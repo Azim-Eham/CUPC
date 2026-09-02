@@ -17,7 +17,6 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
     department: (initialData.department as string) || "",
     coverImage: (initialData.coverImage as string) || "",
     profileImage: (initialData.profileImage as string) || "",
-    availableForMentorship: (initialData.availableForMentorship as boolean) || false,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -11,8 +11,6 @@ export default async function EditProfilePage() {
     where: { id: session.user.id },
     select: {
       name: true,
-      role: true,
-      availableForMentorship: true,
       bio: true,
       department: true,
       profileImage: true,

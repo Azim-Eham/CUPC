@@ -1,0 +1,14 @@
+--- profile-hero.tsx
++++ profile-hero.tsx
+@@ -47,6 +47,11 @@
+                   "bg-[#12172e]/5 text-text-secondary"
+                 }`}>
+                   {user.role}
+                 </Badge>
+                 <span className="text-sm font-medium text-brand-navy">{user.department}</span>
++                {user.role === "ALUMNI" && (
++                  <Badge variant="outline" className={`border-[#e2e2ea] ${user.availableForMentorship ? "bg-amber-500/10 text-amber-500 font-semibold" : "bg-neutral-100 text-neutral-500"}`}>
++                    {user.availableForMentorship ? "✓ Available for Mentorship" : "Not Available for Mentorship"}
++                  </Badge>
++                )}
+               </div>
