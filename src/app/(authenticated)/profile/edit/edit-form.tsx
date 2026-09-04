@@ -28,6 +28,26 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
     mentorExpertise: (initialData.mentorExpertise as string[]) || [],
   });
 
+
+  const [rawJsonInputs, setRawJsonInputs] = useState<Record<string, string>>(() => {
+    const inputs: Record<string, string> = {};
+    [
+      "education", "experience", "projects", "publications", "achievements", "socialLinks"
+    ].forEach(key => {
+      inputs[key] = JSON.stringify(initialData[key as keyof typeof initialData] || [], null, 2);
+    });
+    return inputs;
+  });
+  
+  const [rawMentorExpertise, setRawMentorExpertise] = useState(() => ((initialData.mentorExpertise as string[]) || []).join(", "));
+
+  const syncJsonToForm = (id: string, value: string) => {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) setFormData(prev => ({...prev, [id]: parsed}));
+    } catch {}
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -142,16 +162,9 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
               <Label htmlFor={id} className="text-brand-navy font-semibold">{label} (JSON Array)</Label>
               <Textarea 
                 id={id}
-                value={JSON.stringify(formData[id as keyof typeof formData], null, 2)}
-                onChange={e => {
-                  try {
-                    const parsed = JSON.parse(e.target.value);
-                    if (Array.isArray(parsed)) {
-                      setFormData({...formData, [id]: parsed});
-                    }
-                  } catch (err) {
-                  }
-                }}
+                value={rawJsonInputs[id]}
+                onChange={e => setRawJsonInputs(prev => ({...prev, [id]: e.target.value}))}
+                onBlur={e => syncJsonToForm(id, e.target.value)}
                 className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20 min-h-[100px] font-mono text-sm"
               />
             </div>
@@ -165,8 +178,9 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
               <Label htmlFor="mentorExpertise" className="text-brand-navy font-semibold">Expertise (Comma-separated)</Label>
               <Input 
                 id="mentorExpertise"
-                value={formData.mentorExpertise.join(", ")}
-                onChange={e => setFormData({...formData, mentorExpertise: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})}
+                value={rawMentorExpertise}
+                onChange={e => setRawMentorExpertise(e.target.value)}
+                onBlur={e => setFormData(prev => ({...prev, mentorExpertise: e.target.value.split(",").map(s => s.trim()).filter(Boolean)}))}
                 className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20"
               />
             </div>
