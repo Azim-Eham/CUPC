@@ -20,7 +20,14 @@ export async function PUT(req: Request) {
         coverImage: data.coverImage,
         profileImage: data.profileImage,
         availableForMentorship: typeof data.availableForMentorship === 'boolean' ? data.availableForMentorship : undefined,
-        // Extend here to update json arrays for portfolio
+        phone: data.phone,
+        socialLinks: data.socialLinks,
+        education: data.education,
+        experience: data.experience,
+        projects: data.projects,
+        publications: data.publications,
+        achievements: data.achievements,
+        mentorExpertise: Array.isArray(data.mentorExpertise) ? data.mentorExpertise.map(String) : undefined,
       },
     });
 
