@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { User } from "@prisma/client";
-import { MapPin, Mail, Calendar } from "lucide-react";
+import { MapPin, Mail, Calendar, Phone, Hash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SocialLink } from "@/types/profile";
@@ -128,16 +128,38 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
                     )}
                   </>
                 )}
-                {user.role === "STUDENT" && user.batch && (
-                  <li className="flex items-center gap-3">
-                    <Calendar className="w-4 h-4 text-text-secondary" />
-                    <span>Batch {user.batch}</span>
-                  </li>
+                {user.role === "STUDENT" && (
+                  <>
+                    {user.batch && (
+                      <li className="flex items-center gap-3">
+                        <Calendar className="w-4 h-4 text-text-secondary" />
+                        <span>Batch {user.batch}</span>
+                      </li>
+                    )}
+                    {user.session && (
+                      <li className="flex items-center gap-3">
+                        <Calendar className="w-4 h-4 text-text-secondary" />
+                        <span>Session {user.session}</span>
+                      </li>
+                    )}
+                    {user.studentId && (
+                      <li className="flex items-center gap-3">
+                        <Hash className="w-4 h-4 text-text-secondary" />
+                        <span>ID: {user.studentId}</span>
+                      </li>
+                    )}
+                  </>
                 )}
                 <li className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-text-secondary" />
                   <span>University of Chittagong</span>
                 </li>
+                {user.phone && (
+                  <li className="flex items-center gap-3">
+                    <Phone className="w-4 h-4 text-text-secondary" />
+                    <span>{user.phone}</span>
+                  </li>
+                )}
               </ul>
             </div>
 
