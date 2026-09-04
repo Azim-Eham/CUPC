@@ -18,6 +18,14 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
     coverImage: (initialData.coverImage as string) || "",
     profileImage: (initialData.profileImage as string) || "",
     availableForMentorship: (initialData.availableForMentorship as boolean) || false,
+    phone: (initialData.phone as string) || "",
+    education: (initialData.education as unknown[]) || [],
+    experience: (initialData.experience as unknown[]) || [],
+    projects: (initialData.projects as unknown[]) || [],
+    publications: (initialData.publications as unknown[]) || [],
+    achievements: (initialData.achievements as unknown[]) || [],
+    socialLinks: (initialData.socialLinks as unknown[]) || [],
+    mentorExpertise: (initialData.mentorExpertise as string[]) || [],
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -110,6 +118,60 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
             />
           </div>
         </div>
+
+        <div className="space-y-4 pt-4">
+          <h3 className="text-lg font-medium text-brand-navy border-b border-[#e2e2ea] pb-2">Contact & Arrays (Raw JSON Edit)</h3>
+          <div className="grid gap-2">
+            <Label htmlFor="phone" className="text-brand-navy font-semibold">Phone</Label>
+            <Input 
+              id="phone"
+              value={formData.phone}
+              onChange={e => setFormData({...formData, phone: e.target.value})}
+              className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20"
+            />
+          </div>
+          {[ 
+            { id: "education", label: "Education" }, 
+            { id: "experience", label: "Experience" }, 
+            { id: "projects", label: "Projects" }, 
+            { id: "publications", label: "Publications" }, 
+            { id: "achievements", label: "Achievements" }, 
+            { id: "socialLinks", label: "Social Links" } 
+          ].map(({ id, label }) => (
+            <div key={id} className="grid gap-2">
+              <Label htmlFor={id} className="text-brand-navy font-semibold">{label} (JSON Array)</Label>
+              <Textarea 
+                id={id}
+                value={JSON.stringify(formData[id as keyof typeof formData], null, 2)}
+                onChange={e => {
+                  try {
+                    const parsed = JSON.parse(e.target.value);
+                    if (Array.isArray(parsed)) {
+                      setFormData({...formData, [id]: parsed});
+                    }
+                  } catch (err) {
+                  }
+                }}
+                className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20 min-h-[100px] font-mono text-sm"
+              />
+            </div>
+          ))}
+        </div>
+
+        {(initialData.role === "ALUMNI" || initialData.role === "FACULTY") && (
+          <div className="space-y-4 pt-4">
+            <h3 className="text-lg font-medium text-brand-navy border-b border-[#e2e2ea] pb-2">Mentorship Expertise</h3>
+            <div className="grid gap-2">
+              <Label htmlFor="mentorExpertise" className="text-brand-navy font-semibold">Expertise (Comma-separated)</Label>
+              <Input 
+                id="mentorExpertise"
+                value={formData.mentorExpertise.join(", ")}
+                onChange={e => setFormData({...formData, mentorExpertise: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})}
+                className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20"
+              />
+            </div>
+          </div>
+        )}
 
         {initialData.role === "ALUMNI" && (
           <div className="space-y-4 pt-4">
