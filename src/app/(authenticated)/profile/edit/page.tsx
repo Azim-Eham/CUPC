@@ -18,6 +18,13 @@ export default async function EditProfilePage() {
       profileImage: true,
       coverImage: true,
       socialLinks: true,
+      phone: true,
+      education: true,
+      experience: true,
+      projects: true,
+      publications: true,
+      achievements: true,
+      mentorExpertise: true,
     }
   });
 
