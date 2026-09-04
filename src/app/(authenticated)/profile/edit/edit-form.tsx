@@ -51,12 +51,30 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
+      const submissionData = { ...formData };
+
+      // Merge latest raw JSON state on submit (handles active focus / Enter key)
+      Object.entries(rawJsonInputs).forEach(([key, value]) => {
+        try {
+          const parsed = JSON.parse(value);
+          if (Array.isArray(parsed)) {
+            (submissionData as any)[key] = parsed;
+          }
+        } catch {}
+      });
+
+      // Merge latest expertise
+      submissionData.mentorExpertise = rawMentorExpertise
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean);
+
       const res = await fetch("/api/user/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submissionData),
       });
 
       if (res.ok) {
