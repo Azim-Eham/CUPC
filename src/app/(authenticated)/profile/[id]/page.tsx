@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 import { ProfileHero } from "@/components/profile/profile-hero";
 import { TimelineSection } from "@/components/profile/timeline-section";
 import { ProjectsSection } from "@/components/profile/projects-section";
@@ -59,6 +60,29 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
       <ProfileHero user={user} isSelf={isSelf} />
       
       <div className="space-y-12">
+        
+        {user.role === 'FACULTY' && user.researchAreas && user.researchAreas.length > 0 && (
+          <div className="space-y-6">
+            <h3 className="text-xs font-mono uppercase tracking-widest text-text-secondary mb-6 pl-2">Research Areas</h3>
+            <div className="flex flex-wrap gap-2 px-2">
+              {user.researchAreas.map((area: string, i: number) => (
+                <Badge key={i} variant="secondary">{area}</Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {(user.role === 'ALUMNI' || user.role === 'FACULTY') && user.availableForMentorship && user.mentorExpertise && user.mentorExpertise.length > 0 && (
+          <div className="space-y-6">
+            <h3 className="text-xs font-mono uppercase tracking-widest text-text-secondary mb-6 pl-2">Mentorship Expertise</h3>
+            <div className="flex flex-wrap gap-2 px-2">
+              {user.mentorExpertise.map((expertise: string, i: number) => (
+                <Badge key={i} variant="secondary">{expertise}</Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
         <TimelineSection education={education} experience={experience} />
         <ProjectsSection projects={projects} />
         <PublicationsSection publications={publications} />
