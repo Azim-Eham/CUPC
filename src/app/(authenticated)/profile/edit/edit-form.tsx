@@ -26,6 +26,7 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
     achievements: (initialData.achievements as unknown[]) || [],
     socialLinks: (initialData.socialLinks as unknown[]) || [],
     mentorExpertise: (initialData.mentorExpertise as string[]) || [],
+    researchAreas: (initialData.researchAreas as string[]) || [],
   });
 
 
@@ -40,6 +41,7 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
   });
   
   const [rawMentorExpertise, setRawMentorExpertise] = useState(() => ((initialData.mentorExpertise as string[]) || []).join(", "));
+  const [rawResearchAreas, setRawResearchAreas] = useState(() => ((initialData.researchAreas as string[]) || []).join(", "));
 
   const syncJsonToForm = (id: string, value: string) => {
     try {
@@ -70,6 +72,11 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
         .split(",")
         .map(s => s.trim())
         .filter(Boolean);
+
+    submissionData.researchAreas = rawResearchAreas
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean);
 
       const res = await fetch("/api/user/profile", {
         method: "PUT",
@@ -199,6 +206,21 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
                 value={rawMentorExpertise}
                 onChange={e => setRawMentorExpertise(e.target.value)}
                 onBlur={e => setFormData(prev => ({...prev, mentorExpertise: e.target.value.split(",").map(s => s.trim()).filter(Boolean)}))}
+                className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20"
+              />
+            </div>
+          </div>
+        )}
+
+        {initialData.role === "FACULTY" && (
+          <div className="space-y-4 pt-4">
+            <h3 className="text-lg font-medium text-brand-navy border-b border-[#e2e2ea] pb-2">Research Areas</h3>
+            <div className="grid gap-2">
+              <Label htmlFor="researchAreas" className="text-brand-navy font-semibold">Areas (Comma-separated)</Label>
+              <Input 
+                id="researchAreas"
+                value={rawResearchAreas}
+                onChange={e => setRawResearchAreas(e.target.value)}
                 className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20"
               />
             </div>

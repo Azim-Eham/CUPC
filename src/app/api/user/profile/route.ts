@@ -27,7 +27,8 @@ export async function PUT(req: Request) {
         projects: data.projects,
         publications: data.publications,
         achievements: data.achievements,
-        mentorExpertise: Array.isArray(data.mentorExpertise) ? data.mentorExpertise.map(String) : undefined,
+        mentorExpertise: data.mentorExpertise ? Array.isArray(data.mentorExpertise) ? data.mentorExpertise.map(String) : [] : undefined,
+        researchAreas: data.researchAreas ? Array.isArray(data.researchAreas) ? data.researchAreas.map(String) : [] : undefined,
       },
     });
 
