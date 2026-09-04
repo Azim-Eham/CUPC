@@ -45,3 +45,8 @@ export interface Achievement {
   date?: string;
   description?: string;
 }
+
+export interface MentorshipExpertise {
+  id: string; // Add an ID for easy array manipulation in the UI
+  topic: string;
+}
