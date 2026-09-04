@@ -12,6 +12,9 @@ type ProfileUser = Pick<User, "name" | "role" | "department" | "profileImage" | 
   designation?: string | null;
   graduationYear?: number | null;
   batch?: string | null;
+  session?: string | null;
+  studentId?: string | null;
+  phone?: string | null;
 };
 
 interface ProfileHeroProps {
