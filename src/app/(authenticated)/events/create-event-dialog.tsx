@@ -5,11 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { createEvent } from "@/app/actions/events";
+import { createEvent } from "@/app/actions/event";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
-import { MediaUpload } from "@/components/ui/media-upload";
-import Image from "next/image";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export function CreateEventDialog() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,18 +20,25 @@ export function CreateEventDialog() {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
-    if (coverImage) {
-      formData.append("coverImage", coverImage);
-    }
 
-    const result = await createEvent(formData);
+    const data = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      date: new Date(formData.get("date") as string),
+      venue: formData.get("venue") as string,
+      category: formData.get("category") as string,
+      coverImage: coverImage || undefined,
+    };
+
+    const result = await createEvent(data);
 
     if (result.error) {
       toast.error(result.error);
     } else {
       toast.success("Event created successfully");
-      setIsOpen(false);
+      (e.target as HTMLFormElement).reset();
       setCoverImage(null);
+      setIsOpen(false);
     }
 
     setIsSubmitting(false);
@@ -86,26 +92,14 @@ export function CreateEventDialog() {
 
           <div className="space-y-2">
             <Label>Cover Image</Label>
-            <div className="border-2 border-dashed border-[#e2e2ea] rounded-xl p-4">
-              <MediaUpload
-                onUploadComplete={(urls) => setCoverImage(urls[0] || null)}
-                maxFiles={1}
-                bucket="cupc-images"
+            <div className="border border-[#e2e2ea] rounded-xl p-4">
+              <ImageUpload
+                value={coverImage || ""}
+                onChange={(url) => setCoverImage(url)}
+                folder="covers"
+                label="Event Cover"
+                fallbackIcon="image"
               />
-              {coverImage && (
-                <div className="mt-4 relative h-40 w-full rounded-lg overflow-hidden border">
-                  <Image src={coverImage} alt="Cover preview" fill className="object-cover" />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="sm"
-                    className="absolute top-2 right-2"
-                    onClick={() => setCoverImage(null)}
-                  >
-                    Remove
-                  </Button>
-                </div>
-              )}
             </div>
           </div>
 
