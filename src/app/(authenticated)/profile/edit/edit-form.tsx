@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
+import { Plus, X } from "lucide-react";
+
 export function EditProfileForm({ initialData }: { initialData: Record<string, unknown> }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -19,12 +21,12 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
     profileImage: (initialData.profileImage as string) || "",
     availableForMentorship: (initialData.availableForMentorship as boolean) || false,
     phone: (initialData.phone as string) || "",
-    education: (initialData.education as unknown[]) || [],
-    experience: (initialData.experience as unknown[]) || [],
-    projects: (initialData.projects as unknown[]) || [],
-    publications: (initialData.publications as unknown[]) || [],
-    achievements: (initialData.achievements as unknown[]) || [],
-    socialLinks: (initialData.socialLinks as unknown[]) || [],
+    education: Array.isArray(initialData.education) ? initialData.education : [],
+    experience: Array.isArray(initialData.experience) ? initialData.experience : [],
+    projects: Array.isArray(initialData.projects) ? initialData.projects : [],
+    publications: Array.isArray(initialData.publications) ? initialData.publications : [],
+    certificates: Array.isArray(initialData.achievements) ? initialData.achievements : [],
+    socialLinks: Array.isArray(initialData.socialLinks) ? initialData.socialLinks : [],
     mentorExpertise: (initialData.mentorExpertise as string[]) || [],
     researchAreas: (initialData.researchAreas as string[]) || [],
   });
@@ -33,12 +35,52 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
   const [rawMentorExpertise, setRawMentorExpertise] = useState(() => ((initialData.mentorExpertise as string[]) || []).join(", "));
   const [rawResearchAreas, setRawResearchAreas] = useState(() => ((initialData.researchAreas as string[]) || []).join(", "));
 
+
+  // Handlers for dynamic array fields
+  const addArrayItem = (field: string, defaultItem: any) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: [...(prev[field as keyof typeof formData] as any[]), defaultItem]
+    }));
+  };
+
+  const removeArrayItem = (field: string, index: number) => {
+    setFormData(prev => {
+      const newArray = [...(prev[field as keyof typeof formData] as any[])];
+      newArray.splice(index, 1);
+      return { ...prev, [field]: newArray };
+    });
+  };
+
+  const updateArrayItem = (field: string, index: number, key: string, value: string) => {
+    setFormData(prev => {
+      const newArray = [...(prev[field as keyof typeof formData] as any[])];
+      if (typeof newArray[index] === 'object') {
+        newArray[index] = { ...newArray[index], [key]: value };
+      } else {
+        newArray[index] = value;
+      }
+      return { ...prev, [field]: newArray };
+    });
+  };
+
+  const updateSimpleArrayItem = (field: string, index: number, value: string) => {
+    setFormData(prev => {
+      const newArray = [...(prev[field as keyof typeof formData] as any[])];
+      newArray[index] = value;
+      return { ...prev, [field]: newArray };
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const submissionData = { ...formData };
+
+      // Map certificates back to achievements for the backend
+      (submissionData as any).achievements = submissionData.certificates;
 
       // Merge latest expertise
       submissionData.mentorExpertise = rawMentorExpertise
