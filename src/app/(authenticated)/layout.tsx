@@ -94,51 +94,52 @@ export default async function AuthenticatedLayout({
       </NavbarWrapper>
 
       {/* Mobile Nav (Bottom) */}
-      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm">
-        <nav className="flex items-center justify-between px-6 py-4 bg-brand-navy/95 backdrop-blur-md rounded-full border border-white/10 shadow-xl">
-          <Link href="/feed" className="text-xs font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
+      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-lg">
+        <nav className="flex items-center gap-6 overflow-x-auto px-6 py-4 bg-brand-navy/95 backdrop-blur-md rounded-full border border-white/10 shadow-xl" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <style dangerouslySetInnerHTML={{__html: `nav::-webkit-scrollbar { display: none; }`}} />
+          <Link href="/feed" className="shrink-0 text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
             <Home className="w-5 h-5" />
-            <span className="hidden sm:inline">Feed</span>
+            <span>Feed</span>
           </Link>
-          <Link href="/events" className="text-xs font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
+          <Link href="/events" className="shrink-0 text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
             <Calendar className="w-5 h-5" />
-            <span className="hidden sm:inline">Events</span>
+            <span>Events</span>
           </Link>
-          <Link href="/resources" className="text-xs font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
+          <Link href="/resources" className="shrink-0 text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
             <FileText className="w-5 h-5" />
-            <span className="hidden sm:inline">Resources</span>
+            <span>Resources</span>
           </Link>
-          <Link href="/members" className="text-xs font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
+          <Link href="/members" className="shrink-0 text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
             <Users className="w-5 h-5" />
-            <span className="hidden sm:inline">Members</span>
+            <span>Members</span>
           </Link>
-          <Link href="/mentors" className="text-xs font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
+          <Link href="/mentors" className="shrink-0 text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
             <GraduationCap className="w-5 h-5" />
-            <span className="hidden sm:inline">Mentors</span>
+            <span>Mentors</span>
           </Link>
           {(session.user.role === "ALUMNI" || session.user.role === "FACULTY") && (
-            <Link href="/mentorship-dashboard" className="text-xs font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
+            <Link href="/mentorship-dashboard" className="shrink-0 text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
               <LayoutDashboard className="w-5 h-5" />
-              <span className="hidden sm:inline">Dashboard</span>
+              <span>Dashboard</span>
             </Link>
           )}
-          <Link href="/profile" className="text-xs font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
+          <Link href="/profile" className="shrink-0 text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">
             <UserCircle className="w-5 h-5" />
-            <span className="hidden sm:inline">Profile</span>
+            <span>Profile</span>
           </Link>
           <form action={async () => {
             "use server";
             await signOut({ redirectTo: "/" });
-          }}>
-            <button type="submit" className="text-xs font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1 bg-transparent border-none p-0 cursor-pointer">
+          }} className="shrink-0">
+            <button type="submit" className="text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1 bg-transparent border-none p-0 cursor-pointer">
               <LogOut className="w-5 h-5" />
-              <span className="hidden sm:inline">Logout</span>
+              <span>Logout</span>
             </button>
           </form>
           {session.user.role === "ADMIN" && (
-            <Link href="/admin/users" className="text-xs font-semibold text-[#f2a93c]/90 hover:text-[#f2a93c] flex flex-col items-center gap-1">
+            <Link href="/admin/users" className="shrink-0 text-[10px] font-semibold text-[#f2a93c]/90 hover:text-[#f2a93c] flex flex-col items-center gap-1">
               <Shield className="w-5 h-5" />
-              <span className="hidden sm:inline">Admin</span>
+              <span>Admin</span>
             </Link>
           )}
         </nav>
