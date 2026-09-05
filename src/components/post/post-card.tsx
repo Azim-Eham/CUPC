@@ -17,6 +17,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { AcademicCard } from "@/components/ui/academic-card";
+import { StaggerItem } from "@/components/ui/stagger-reveal";
 
 interface PostAuthor {
   id: string;
@@ -48,15 +50,13 @@ interface PostComment {
 interface Post {
   id: string;
   content: string;
+  images: string[];
   createdAt: Date;
   authorId: string;
   author: PostAuthor;
   reactions: Reaction[];
   comments: PostComment[];
 }
-
-import { AcademicCard } from "@/components/ui/academic-card";
-import { StaggerItem } from "@/components/ui/stagger-reveal";
 
 interface PostCardProps {
   post: Post;
@@ -175,6 +175,22 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
             className="prose prose-brand max-w-none text-base leading-relaxed text-brand-navy mb-4"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
+          {post.images && post.images.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
+              {post.images.map((url, i) => {
+                const isVideo = url.match(/\.(mp4|webm|ogg)$/i);
+                return (
+                  <div key={i} className="rounded-lg overflow-hidden border border-[#e2e2ea] bg-slate-50">
+                    {isVideo ? (
+                      <video src={url} className="w-full h-auto max-h-[400px] object-contain" controls />
+                    ) : (
+                      <img src={url} alt="Post attachment" className="w-full h-auto max-h-[400px] object-cover" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
 
         <CardFooter className="flex flex-col border-t border-[#e2e2ea] p-0">

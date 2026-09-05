@@ -4,34 +4,16 @@ import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Award, Trophy, Star } from "lucide-react";
 import { AcademicCard } from "@/components/ui/academic-card";
 import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
+import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
-// Mock data for achievements. In a real app, this would be in the database.
-const ACHIEVEMENTS = [
-  {
-    id: "1",
-    title: "National Physics Olympiad Winners",
-    description: "CUPC members secured 1st and 3rd positions in the 2025 National Physics Olympiad.",
-    date: "2025-05-15",
-    type: "trophy",
-  },
-  {
-    id: "2",
-    title: "Best Science Club Award",
-    description: "Awarded the Best Science Club of the Year by the University Administration.",
-    date: "2024-12-10",
-    type: "star",
-  },
-  {
-    id: "3",
-    title: "Published Research Paper",
-    description: "A group of senior members published their undergraduate thesis in the Journal of Applied Physics.",
-    date: "2024-08-22",
-    type: "award",
-  },
-];
+
 
 export default async function AchievementsPage() {
   const session = await auth();
+  const achievements = await prisma.achievement.findMany({
+    orderBy: { date: "desc" }
+  });
 
   if (!session?.user?.id) {
     redirect("/login");
@@ -46,8 +28,17 @@ export default async function AchievementsPage() {
         </p>
       </div>
 
+      {session.user.role === "ADMIN" && (
+        <div className="flex justify-end mb-6">
+          <Link href="/admin/achievements/new" className="bg-[#f2a93c] hover:bg-[#d89635] text-brand-navy font-semibold px-4 py-2 rounded-full transition-colors flex items-center">
+            <Trophy className="w-4 h-4 mr-2" />
+            Add Achievement
+          </Link>
+        </div>
+      )}
+
       <StaggerReveal className="space-y-6">
-        {ACHIEVEMENTS.map((achievement) => (
+        {achievements.map((achievement) => (
           <StaggerItem key={achievement.id}>
             <AcademicCard className="overflow-hidden group hover:border-[#e2e2ea] transition-colors">
               <div className="flex flex-col md:flex-row">

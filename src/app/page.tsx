@@ -31,18 +31,57 @@ async function getFeaturedMentors() {
 }
 
 const faculty = [
-  { name: "Dr. A. K. M. Rezaur Rahman", role: "Chairman & Professor", initials: "RR", imageUrl: "" },
-  { name: "Dr. Mohammed Idris Miah", role: "Professor", initials: "IM", imageUrl: "" },
-  { name: "Dr. Md. Maqbul Hossain", role: "Professor", initials: "MH", imageUrl: "" },
-  { name: "Dr. Mohammad Omar Faruk", role: "Professor", initials: "OF", imageUrl: "" },
-  { name: "Dr. Shyamal Ranjan Chakraborty", role: "Professor", initials: "SC", imageUrl: "" },
+  {
+    "name": "Dr. Md. Rafiqul Islam",
+    "role": "Professor & Chairman",
+    "initials": "MI",
+    "imageUrl": "https://cu.ac.bd/assets/image/faculty_staff_users/390_8LLYLCZB3D.jpg"
+  },
+  {
+    "name": "Dr. Kazi Shamim Sultana",
+    "role": "Professor",
+    "initials": "KS",
+    "imageUrl": "https://cu.ac.bd/assets/image/faculty_staff_users/391_FJZ0YIL8YO.jpg"
+  },
+  {
+    "name": "Dr AKM Moinul Haque Meaze",
+    "role": "Professor",
+    "initials": "DM",
+    "imageUrl": "https://cu.ac.bd/assets/image/faculty_staff_users/51_1H6DNZ4YDL.jpg"
+  },
+  {
+    "name": "Professor Dr. Mohammed Nasim Hasan",
+    "role": "Professor",
+    "initials": "MH",
+    "imageUrl": "https://cu.ac.bd/assets/image/faculty_staff_users/392_YPGWUGVVZY.jpg"
+  },
+  {
+    "name": "Dr. Shyamal Ranjan Chakraborty",
+    "role": "Professor",
+    "initials": "SC",
+    "imageUrl": "https://cu.ac.bd/assets/image/faculty_staff_users/393_18J9UMOXD5.jpg"
+  }
 ];
 
-const events = [
-  { title: "Annual Physics Symposium", date: "November 15, 2026", type: "Conference", description: "Join leading physicists for a day of lectures and paper presentations." },
-  { title: "Career in Quantum Tech", date: "October 10, 2026", type: "Webinar", description: "Alumni panel discussing opportunities in quantum computing." },
-  { title: "Observatory Night", date: "December 5, 2026", type: "Meetup", description: "Stargazing and networking event at the CU Observatory." },
-];
+async function getUpcomingEvents() {
+  try {
+    const upcomingEvents = await prisma.event.findMany({
+      where: {
+        date: {
+          gte: new Date(),
+        },
+      },
+      orderBy: {
+        date: "asc",
+      },
+      take: 3,
+    });
+    return upcomingEvents;
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    return [];
+  }
+}
 
 import { PublicNavbar } from "@/components/public-navbar";
 import { HeroBackground } from "@/components/hero-background";
@@ -50,6 +89,7 @@ import { ScrollAnimations } from "@/components/scroll-animations";
 
 export default async function LandingPage() {
   const mentors = await getFeaturedMentors();
+  const dbEvents = await getUpcomingEvents();
   return (
     <div className="min-h-screen bg-surface-base flex flex-col font-sans">
       <ScrollAnimations />
@@ -209,7 +249,7 @@ export default async function LandingPage() {
 
           {mentors.length > 0 ? (
             <div data-anim="mentors-content" className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {mentors.map((mentor, index) => {
+              {mentors.map((mentor) => {
                 const initials = mentor.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                 return (
                   <Link
@@ -282,11 +322,11 @@ export default async function LandingPage() {
             </div>
 
             {faculty.length > 0 ? (
-              <div className="flex flex-row overflow-x-auto lg:grid lg:grid-cols-5 gap-4 pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 scrollbar-hide">
+              <div className="flex flex-row overflow-x-auto snap-x snap-mandatory lg:grid after:content-[''] after:w-6 after:shrink-0 lg:after:hidden lg:grid-cols-5 gap-4 pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 scrollbar-hide">
                 {faculty.map((member, i) => {
                   const initials = member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                   return (
-                    <div key={i} data-anim="faculty-card" className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col items-center text-center gap-5 group hover:-translate-y-1.5 relative overflow-hidden">
+                    <div key={i} data-anim="faculty-card" className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col items-center text-center gap-5 group hover:-translate-y-1.5 relative overflow-hidden min-w-[240px] md:min-w-0 shrink-0 snap-center lg:snap-align-none">
                       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#f2a93c]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                       {member.imageUrl ? (
@@ -342,7 +382,7 @@ export default async function LandingPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {events.map((event, i) => (
+              {dbEvents.map((event, i) => (
                 <div key={i} data-anim="event-card" className="bg-white border border-[#e2e2ea] rounded-[2rem] p-10 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden flex flex-col h-full">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#12172e]/5 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -350,11 +390,11 @@ export default async function LandingPage() {
                     <div className="w-14 h-14 rounded-2xl bg-surface-alt flex items-center justify-center text-brand-navy group-hover:bg-[#12172e] group-hover:text-white transition-colors duration-300 shadow-sm">
                       <Calendar className="w-6 h-6" />
                     </div>
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#f2a93c]">{event.type}</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-[#f2a93c]">Event</span>
                   </div>
 
                   <h3 className="text-2xl font-bold text-brand-navy mb-3 group-hover:text-[#f2a93c] transition-colors">{event.title}</h3>
-                  <p className="text-sm font-bold text-[#12172e]/60 mb-6 flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-[#f2a93c] mr-2"></span>{event.date}</p>
+                  <p className="text-sm font-bold text-[#12172e]/60 mb-6 flex items-center"><span className="w-1.5 h-1.5 rounded-full bg-[#f2a93c] mr-2"></span>{new Date(event.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
                   <p className="text-text-secondary text-lg leading-relaxed mt-auto">{event.description}</p>
                 </div>
               ))}

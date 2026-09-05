@@ -195,3 +195,13 @@ model Report {
   reviewedAt    DateTime?
   createdAt     DateTime @default(now())
 }
+
+model Achievement {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  date        DateTime
+  type        String   // "trophy", "star", "award", etc.
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

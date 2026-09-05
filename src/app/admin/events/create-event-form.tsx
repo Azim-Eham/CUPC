@@ -7,9 +7,20 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createEvent } from "@/app/actions/event";
 import { toast } from "sonner";
+import { Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export function CreateEventForm() {
+  const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [coverImage, setCoverImage] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,6 +45,7 @@ export function CreateEventForm() {
       date: new Date(dateStr),
       venue,
       category,
+      coverImage: coverImage || undefined,
     });
 
     if (result.error) {
@@ -41,52 +53,87 @@ export function CreateEventForm() {
     } else {
       toast.success("Event created successfully");
       (e.target as HTMLFormElement).reset();
+      setCoverImage("");
+      setIsOpen(false);
     }
 
     setIsSubmitting(false);
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="title">Title *</Label>
-        <Input id="title" name="title" required />
-      </div>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger render={<Button className="gap-2" />}>
+        <Plus className="h-4 w-4" />
+        Create Event
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Create New Event</DialogTitle>
+        </DialogHeader>
 
-      <div className="space-y-2">
-        <Label htmlFor="category">Category *</Label>
-        <select
-          id="category"
-          name="category"
-          required
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <option value="seminar">Seminar</option>
-          <option value="workshop">Workshop</option>
-          <option value="competition">Competition</option>
-          <option value="outreach">Outreach</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
+        <form onSubmit={handleSubmit} className="space-y-4 pt-4">
+          <div className="space-y-2">
+            <Label>Event Cover Image</Label>
+            <ImageUpload
+              value={coverImage}
+              onChange={setCoverImage}
+              folder="covers"
+              label="Event Cover Image"
+              fallbackIcon="image"
+            />
+          </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="date">Date & Time *</Label>
-        <Input id="date" name="date" type="datetime-local" required />
-      </div>
+          <div className="space-y-2">
+            <Label htmlFor="title">Title *</Label>
+            <Input id="title" name="title" required />
+          </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="venue">Venue (Optional)</Label>
-        <Input id="venue" name="venue" placeholder="E.g. Room 402 or Zoom Link" />
-      </div>
+          <div className="space-y-2">
+            <Label htmlFor="category">Category *</Label>
+            <select
+              id="category"
+              name="category"
+              required
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <option value="seminar">Seminar</option>
+              <option value="workshop">Workshop</option>
+              <option value="competition">Competition</option>
+              <option value="outreach">Outreach</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="description">Description *</Label>
-        <Textarea id="description" name="description" rows={4} required />
-      </div>
+          <div className="space-y-2">
+            <Label htmlFor="date">Date & Time *</Label>
+            <Input id="date" name="date" type="datetime-local" required />
+          </div>
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Creating..." : "Create Event"}
-      </Button>
-    </form>
+          <div className="space-y-2">
+            <Label htmlFor="venue">Venue (Optional)</Label>
+            <Input id="venue" name="venue" placeholder="E.g. Room 402 or Zoom Link" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="description">Description *</Label>
+            <Textarea id="description" name="description" rows={4} required />
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4 border-t">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsOpen(false)}
+              disabled={isSubmitting}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Creating..." : "Create Event"}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

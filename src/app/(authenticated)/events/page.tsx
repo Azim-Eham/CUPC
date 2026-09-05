@@ -6,7 +6,8 @@ import { format } from "date-fns";
 import { CalendarIcon, MapPin } from "lucide-react";
 import { AcademicCard } from "@/components/ui/academic-card";
 import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
-import { CreateEventDialog } from "./create-event-dialog";
+import { CreateEventForm } from "@/app/admin/events/create-event-form";
+import { DeleteEventButton } from "./delete-event";
 
 export default async function EventsPage() {
   const session = await auth();
@@ -31,7 +32,7 @@ export default async function EventsPage() {
           <p className="text-text-secondary">Discover and register for upcoming physics seminars, workshops, and competitions.</p>
         </div>
         {session.user.role === "ADMIN" && (
-          <CreateEventDialog />
+          <CreateEventForm />
         )}
       </div>
 
@@ -45,9 +46,12 @@ export default async function EventsPage() {
               {upcomingEvents.map((event) => (
                 <StaggerItem key={event.id}>
                   <AcademicCard className="h-full flex flex-col hover:-translate-y-1 hover:border-[#e2e2ea] transition-all duration-300 group">
-                    <CardHeader className="bg-surface-alt pb-4 border-b border-[#e2e2ea]">
-                      <div className="text-[11px] font-mono text-text-secondary uppercase tracking-widest mb-3">
-                        {event.category}
+                    <CardHeader className="bg-surface-alt pb-4 border-b border-[#e2e2ea] relative">
+                      <div className="flex justify-between items-start">
+                        <div className="text-[11px] font-mono text-text-secondary uppercase tracking-widest mb-3">
+                          {event.category}
+                        </div>
+                        {session.user.role === "ADMIN" && <DeleteEventButton eventId={event.id} />}
                       </div>
                       <CardTitle className="text-xl leading-tight text-brand-navy group-hover:text-amber-500 transition-colors">{event.title}</CardTitle>
                     </CardHeader>
@@ -82,9 +86,12 @@ export default async function EventsPage() {
               {pastEvents.map((event) => (
                 <StaggerItem key={event.id}>
                   <AcademicCard className="h-full bg-surface-base">
-                    <CardHeader className="pb-4">
-                      <div className="text-[10px] font-mono text-text-secondary uppercase tracking-widest mb-2">
-                        {event.category}
+                    <CardHeader className="pb-4 relative">
+                      <div className="flex justify-between items-start">
+                        <div className="text-[10px] font-mono text-text-secondary uppercase tracking-widest mb-2">
+                          {event.category}
+                        </div>
+                        {session.user.role === "ADMIN" && <DeleteEventButton eventId={event.id} />}
                       </div>
                       <CardTitle className="text-base text-text-secondary">{event.title}</CardTitle>
                     </CardHeader>

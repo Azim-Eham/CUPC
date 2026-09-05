@@ -1,0 +1,277 @@
+{
+  "department": "Physics",
+  "institution": "University of Chittagong",
+  "source_url": "https://cu.ac.bd/dept/facultyprofile.php?secno=45&menumapno=130",
+  "faculty_members": [
+    {
+      "name": "Dr. Md. Rafiqul Islam",
+      "designation": "Professor",
+      "email": "mrictp@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=3173",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/390_8LLYLCZB3D.jpg",
+      "ein": "3173",
+      "notes": "Chairman"
+    },
+    {
+      "name": "Dr. Kazi Shamim Sultana",
+      "designation": "Professor",
+      "email": "skazishamimsultana@yahoo.com",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=2995",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/391_FJZ0YIL8YO.jpg",
+      "ein": "2995",
+      "notes": null
+    },
+    {
+      "name": "Dr AKM Moinul Haque Meaze",
+      "designation": "Professor",
+      "email": "meaze@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=3769",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/51_1H6DNZ4YDL.jpg",
+      "ein": "3769",
+      "notes": null
+    },
+    {
+      "name": "Professor Dr. Mohammed Nasim Hasan",
+      "designation": "Professor",
+      "email": "nhasan72bd@yahoo.com",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=3768",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/392_YPGWUGVVZY.jpg",
+      "ein": "3768",
+      "notes": null
+    },
+    {
+      "name": "Dr. Shyamal Ranjan Chakraborty",
+      "designation": "Professor",
+      "email": "shyamal@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=3772",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/393_18J9UMOXD5.jpg",
+      "ein": "3772",
+      "notes": null
+    },
+    {
+      "name": "Dr. S. M. Khorshed Alam",
+      "designation": "Professor",
+      "email": null,
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=3765",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/394_P9NT5987J8.jpg",
+      "ein": "3765",
+      "notes": null
+    },
+    {
+      "name": "Dr. Mohammad Idrish Miah",
+      "designation": "Professor",
+      "email": "m.idrish.miah@cu.ac.bd; idrish_physics@yahoo.com",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=4418",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/395_V7THBR65SJ.jpg",
+      "ein": "4418",
+      "notes": null
+    },
+    {
+      "name": "Dr. Rezaul Azim",
+      "designation": "Professor",
+      "email": "rezaulazim@cu.ac.bd, rezaulazim@yahoo.com",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=4414",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/397_N3R193I57S.jpg",
+      "ein": "4414",
+      "notes": null
+    },
+    {
+      "name": "Dr. Shahida Akhter",
+      "designation": "Professor",
+      "email": "shahida212@cu.ac.bd, shahida212@yahoo.com",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=4417",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/398_RLVXG4EAMB.jpg",
+      "ein": "4417",
+      "notes": null
+    },
+    {
+      "name": "Dr. A. K. M. Rezaur Rahman",
+      "designation": "Professor",
+      "email": "rezaur.physics@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=4786",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/400_8PRD0XJAF4.jpg",
+      "ein": "4786",
+      "notes": null
+    },
+    {
+      "name": "Dr. A. K. M. Ariful Haque Siddique",
+      "designation": "Professor",
+      "email": null,
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=4085",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/401_ASGE7LYIH8.jpg",
+      "ein": "4085",
+      "notes": null
+    },
+    {
+      "name": "Dr. Neelufar Panna",
+      "designation": "Professor",
+      "email": null,
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=3467",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/399_JOGWDR7ET2.jpg",
+      "ein": "3467",
+      "notes": null
+    },
+    {
+      "name": "Mr. Mohammad Asadul Haque",
+      "designation": "Professor",
+      "email": "asad2310@gmail.com; asad.physics@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=4752",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/402_0JBGWHUT5M.jpg",
+      "ein": "4752",
+      "notes": null
+    },
+    {
+      "name": "Dr. Shamima Nasrin",
+      "designation": "Professor",
+      "email": "shamima.physics@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5049",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/405_CB7P06NMB9.jpg",
+      "ein": "5049",
+      "notes": null
+    },
+    {
+      "name": "Dr. Quazi Muhammad Rashed-Nizam",
+      "designation": "Professor",
+      "email": "rnizam_83@yahoo.com",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5048",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/406_UYZRXTEE4F.jpg",
+      "ein": "5048",
+      "notes": null
+    },
+    {
+      "name": "Mr. Nur Mohammad Eman",
+      "designation": "Associate Professor",
+      "email": null,
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5051",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/407_MTGE8J34ED.jpg",
+      "ein": "5051",
+      "notes": null
+    },
+    {
+      "name": "Dr. Md Kowsar Alam",
+      "designation": "Professor",
+      "email": "kowsar.alam@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5047",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/409_X58I0WNSAT.jpg",
+      "ein": "5047",
+      "notes": null
+    },
+    {
+      "name": "Dr. Md. Saiful Alam",
+      "designation": "Associate Professor",
+      "email": "saif10350@gmail.com",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5607",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/412_CO173X62QS.jpg",
+      "ein": "5607",
+      "notes": null
+    },
+    {
+      "name": "Mr. Md. Mohsin",
+      "designation": "Assistant Professor",
+      "email": null,
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5050",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/408_85GSI07CVR.jpg",
+      "ein": "5050",
+      "notes": "on SL"
+    },
+    {
+      "name": "Miss. Shamsun Alam",
+      "designation": "Assistant Professor",
+      "email": null,
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5625",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/411_DA05JUKQUC.jpg",
+      "ein": "5625",
+      "notes": "On Study Leave"
+    },
+    {
+      "name": "Mohammad Shahjahan",
+      "designation": "Assistant Professor",
+      "email": null,
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5626",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/415_X20LG7SR36.jpg",
+      "ein": "5626",
+      "notes": null
+    },
+    {
+      "name": "Dr. Mohammad Ashraful Islam",
+      "designation": "Associate Professor",
+      "email": "ashraful@cu.ac.bd, asharifphys@gmail.com",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5610",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/410_O5FY484512.jpg",
+      "ein": "5610",
+      "notes": null
+    },
+    {
+      "name": "Syeda Karimunnesa",
+      "designation": "Assistant Professor",
+      "email": null,
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5938",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/960_7MT3GIOCUX.jpg",
+      "ein": "5938",
+      "notes": null
+    },
+    {
+      "name": "Dr Santunu Purohit",
+      "designation": "Assistant Professor",
+      "email": "santunupurohit@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5608",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/413_G47DCDNTYR.jpg",
+      "ein": "5608",
+      "notes": null
+    },
+    {
+      "name": "Mohammad Nasirul Hoque",
+      "designation": "Assistant Professor",
+      "email": "nasirul@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5937",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/967_R0J68D0VTF.jpg",
+      "ein": "5937",
+      "notes": null
+    },
+    {
+      "name": "Sadeka Sultana Rubai",
+      "designation": "Assistant Professor",
+      "email": "rubai@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=5939",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/968_GYG8DYSML6.jpg",
+      "ein": "5939",
+      "notes": null
+    },
+    {
+      "name": "Dr. Muhammad Moazzam Hossen",
+      "designation": "Assistant Professor",
+      "email": "moazzam.physics@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=6429",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/1242_N93A38E4RL.jpg",
+      "ein": "6429",
+      "notes": null
+    },
+    {
+      "name": "Abdullah Al Mamun",
+      "designation": "Lecturer",
+      "email": "mamun.abdullah@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=6431",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/1244_TIIXI7P8SL.jpg",
+      "ein": "6431",
+      "notes": null
+    },
+    {
+      "name": "Mr. Abu Hayat",
+      "designation": "Lecturer",
+      "email": "hayat@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=6432",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/1238_HMTCHKXDDL.jpg",
+      "ein": "6432",
+      "notes": null
+    },
+    {
+      "name": "Afroja Tazin Islam",
+      "designation": "Lecturer",
+      "email": "tazin.physics@cu.ac.bd",
+      "profile_url": "https://cu.ac.bd/public_profile/index.php?ein=6433",
+      "image_url": "https://cu.ac.bd/assets/image/faculty_staff_users/profile_pic.png",
+      "ein": "6433",
+      "notes": null
+    }
+  ]
+}

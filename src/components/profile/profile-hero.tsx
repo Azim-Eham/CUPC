@@ -45,19 +45,19 @@ export function ProfileHero({ user, isSelf }: ProfileHeroProps) {
 
       {/* Profile Info */}
       <div className="px-6 md:px-12 pb-10 relative">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 -mt-16 md:-mt-20 mb-6">
-          <div className="flex items-end gap-6">
+        <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 -mt-16 md:-mt-20 mb-6">
+          <div className="flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-6 text-center md:text-left">
             <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-white bg-surface-alt shadow-xl rounded-2xl">
               <AvatarImage src={user.profileImage || ""} className="object-cover" />
               <AvatarFallback className="text-4xl rounded-2xl bg-surface-alt text-brand-navy">
                 {user.name.charAt(0)}
               </AvatarFallback>
             </Avatar>
-            <div className="pb-2">
+            <div className="pb-2 flex flex-col items-center md:items-start">
               <h1 className="text-3xl md:text-4xl font-display font-bold text-brand-navy tracking-tight">
                 {user.name}
               </h1>
-              <div className="flex flex-wrap items-center gap-3 mt-2">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-2">
                 <Badge variant="outline" className={`border-[#e2e2ea] ${
                   user.role === "FACULTY" ? "bg-amber-500/10 text-amber-400" : 
                   user.role === "ALUMNI" ? "bg-teal-500/10 text-teal-400" : 

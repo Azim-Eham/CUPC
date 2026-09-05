@@ -44,8 +44,8 @@ export function UploadResource() {
         const file = fileInputRef.current?.files?.[0];
         if (!file) throw new Error("Please select a file to upload");
 
-        // Basic validation
-        if (file.size > 10 * 1024 * 1024) throw new Error("File must be less than 10MB");
+        // Basic validation (limit to 50MB)
+        if (file.size > 50 * 1024 * 1024) throw new Error("File must be less than 50MB");
 
         const fileExt = file.name.split('.').pop();
         fileType = fileExt || "unknown";
@@ -57,7 +57,10 @@ export function UploadResource() {
           .from("resources")
           .upload(filePath, file);
 
-        if (uploadError) throw new Error("Failed to upload file. Make sure storage is configured.");
+        if (uploadError) {
+          console.error("Supabase upload error:", uploadError);
+          throw new Error(`Failed to upload file: ${uploadError.message}`);
+        }
 
         const { data: publicUrlData } = supabase.storage
           .from("resources")
@@ -91,11 +94,9 @@ export function UploadResource() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Add Resource
-        </Button>
+      <DialogTrigger render={<Button className="gap-2" />}>
+        <Plus className="h-4 w-4" />
+        Add Resource
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
@@ -159,7 +160,7 @@ export function UploadResource() {
               </div>
             ) : (
               <div className="space-y-2">
-                <Label htmlFor="file">File (Max 10MB) *</Label>
+                <Label htmlFor="file">File (Max 50MB) *</Label>
                 <Input id="file" name="file" type="file" ref={fileInputRef} required />
               </div>
             )}

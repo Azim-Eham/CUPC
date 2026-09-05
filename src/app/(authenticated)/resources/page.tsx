@@ -6,11 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { formatDistanceToNow } from "date-fns";
 import { FileIcon, ExternalLink, Download } from "lucide-react";
 import { UploadResource } from "./upload-resource";
+import { DeleteResource } from "./delete-resource";
 
 export default async function ResourcesPage({
   searchParams,
 }: {
-  searchParams: { category?: string; q?: string };
+  searchParams: Promise<{ category?: string; q?: string }>;
 }) {
   const session = await auth();
 
@@ -18,7 +19,7 @@ export default async function ResourcesPage({
     redirect("/login");
   }
 
-  const { category, q } = searchParams;
+  const { category, q } = await searchParams;
 
   const whereClause: {
     isRemoved: boolean;
@@ -69,10 +70,15 @@ export default async function ResourcesPage({
             <AcademicCard key={resource.id} className="flex flex-col">
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start gap-4">
-                  <CardTitle className="text-base line-clamp-2" title={resource.title}>
-                    {resource.title}
-                  </CardTitle>
-                  <FileIcon className="h-5 w-5 text-text-secondary shrink-0" />
+                  <div className="flex items-start gap-4 flex-1">
+                    <CardTitle className="text-base line-clamp-2" title={resource.title}>
+                      {resource.title}
+                    </CardTitle>
+                    <FileIcon className="h-5 w-5 text-text-secondary shrink-0 mt-0.5" />
+                  </div>
+                  {(session.user.role === "ADMIN" || session.user.id === resource.authorId) && (
+                    <DeleteResource resourceId={resource.id} fileUrl={resource.fileUrl} />
+                  )}
                 </div>
                 <div className="text-xs text-text-secondary uppercase tracking-wider font-semibold mt-2">
                   {resource.category}

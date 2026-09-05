@@ -115,7 +115,7 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
   };
 
   return (
-    <AcademicCard className="p-8">
+    <AcademicCard className="p-6 md:p-8">
       <form onSubmit={handleSubmit} className="space-y-6">
         
         <div className="space-y-4">

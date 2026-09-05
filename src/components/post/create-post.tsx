@@ -6,12 +6,14 @@ import StarterKit from "@tiptap/starter-kit";
 import { Button } from "@/components/ui/button";
 import { createPost } from "@/app/actions/post";
 import { toast } from "sonner";
-import { Bold, Italic, Strikethrough, Code, Heading1, Heading2, List, ListOrdered, Quote } from "lucide-react";
+import { Bold, Italic, Strikethrough, Code, Heading1, Heading2, List, ListOrdered, Quote, X } from "lucide-react";
 import { CardContent } from "@/components/ui/card";
 import { AcademicCard } from "@/components/ui/academic-card";
+import { MediaUpload } from "@/components/ui/media-upload";
 
 export function CreatePost() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mediaUrls, setMediaUrls] = useState<string[]>([]);
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -26,15 +28,15 @@ export function CreatePost() {
   if (!editor) return null;
 
   async function handleSubmit() {
-    if (editor?.isEmpty) {
-      toast.error("Post content cannot be empty.");
+    if (editor?.isEmpty && mediaUrls.length === 0) {
+      toast.error("Post content or media cannot be empty.");
       return;
     }
 
     setIsSubmitting(true);
     try {
       const content = editor?.getHTML() || "";
-      const result = await createPost(content, []);
+      const result = await createPost(content, mediaUrls);
 
       if (result.error) {
         toast.error(result.error);
@@ -43,6 +45,7 @@ export function CreatePost() {
 
       toast.success("Post created successfully!");
       editor?.commands.setContent("");
+      setMediaUrls([]);
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
@@ -53,6 +56,10 @@ export function CreatePost() {
   const toggleAction = (action: () => void) => (e: React.MouseEvent) => {
     e.preventDefault();
     action();
+  };
+
+  const removeMedia = (urlToRemove: string) => {
+    setMediaUrls(prev => prev.filter(url => url !== urlToRemove));
   };
 
   return (
@@ -85,9 +92,34 @@ export function CreatePost() {
           <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleBlockquote().run())} data-active={editor.isActive("blockquote") ? "" : undefined}>
             <Quote className="h-4 w-4" />
           </Button>
+          <div className="mx-2 h-4 w-[1px] bg-[#e2e2ea]" />
+          <MediaUpload onUpload={(url) => setMediaUrls(prev => [...prev, url])} folder="uploads" />
         </div>
         <div className="p-4">
           <EditorContent editor={editor} />
+          {mediaUrls.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {mediaUrls.map((url, i) => {
+                const isVideo = url.match(/\.(mp4|webm|ogg)$/i);
+                return (
+                  <div key={i} className="relative group rounded-md border border-[#e2e2ea] overflow-hidden bg-slate-50">
+                    {isVideo ? (
+                      <video src={url} className="h-32 w-auto object-contain" controls />
+                    ) : (
+                      <img src={url} alt="Upload preview" className="h-32 w-auto object-cover" />
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => removeMedia(url)}
+                      className="absolute top-1 right-1 bg-white/80 hover:bg-white rounded-full p-1 text-red-500 shadow-sm"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
         <div className="flex items-center justify-end border-t border-[#e2e2ea] bg-surface-alt p-3">
           <Button onClick={handleSubmit} disabled={isSubmitting} className="bg-brand-navy text-white hover:bg-brand-navy-light rounded-full font-medium shadow-[0_8px_20px_-4px_rgba(18,23,46,0.3)] hover:-translate-y-0.5 transition-all">
