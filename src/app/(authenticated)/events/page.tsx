@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { CalendarIcon, MapPin } from "lucide-react";
 import { AcademicCard } from "@/components/ui/academic-card";
 import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
+import { CreateEventDialog } from "./create-event-dialog";
 
 export default async function EventsPage() {
   const session = await auth();
@@ -24,9 +25,12 @@ export default async function EventsPage() {
 
   return (
     <div className="max-w-5xl mx-auto py-8">
-      <div className="mb-12 text-center">
-        <h1 className="text-3xl font-medium tracking-tight mb-2">Events</h1>
-        <p className="text-text-secondary">Discover and register for upcoming physics seminars, workshops, and competitions.</p>
+      <div className="flex justify-between items-end mb-12">
+        <div>
+          <h1 className="text-3xl font-medium tracking-tight mb-2">Events</h1>
+          <p className="text-text-secondary">Discover and register for upcoming physics seminars, workshops, and competitions.</p>
+        </div>
+        {session.user.role === "ADMIN" && <CreateEventDialog />}
       </div>
 
       <div className="space-y-16">
