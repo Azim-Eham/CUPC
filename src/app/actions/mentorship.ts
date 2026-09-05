@@ -86,6 +86,7 @@ export async function respondToMentorship(requestId: string, status: "ACCEPTED" 
     // TODO: Send notification to requester
 
     revalidatePath("/profile");
+    revalidatePath("/mentorship-dashboard");
     return { success: true };
   } catch (error) {
     return { error: "Failed to respond to request." };

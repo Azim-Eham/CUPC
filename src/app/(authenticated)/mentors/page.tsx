@@ -1,12 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ChevronRight, Search, Lock } from "lucide-react";
+import { Search } from "lucide-react";
 
 export default async function MentorsDirectoryPage() {
   const session = await auth();
@@ -21,7 +18,7 @@ export default async function MentorsDirectoryPage() {
     where: {
       status: "APPROVED",
       availableForMentorship: true,
-      role: "ALUMNI", // Showing only alumni based on prompt
+      role: { in: ["ALUMNI", "FACULTY"] },
     },
     orderBy: { name: "asc" },
     select: {
