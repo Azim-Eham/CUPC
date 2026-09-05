@@ -26,6 +26,12 @@ export function ImageUpload({ value, onChange, folder, label, fallbackIcon }: Im
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Check file size (15MB = 15 * 1024 * 1024 bytes)
+    if (file.size > 15 * 1024 * 1024) {
+      alert("File size exceeds 15MB limit.");
+      return;
+    }
+
     setIsUploading(true);
 
     try {
@@ -101,7 +107,7 @@ export function ImageUpload({ value, onChange, folder, label, fallbackIcon }: Im
             {isUploading ? "Uploading..." : value ? "Change Image" : "Upload Image"}
           </button>
           <p className="text-xs text-text-secondary">
-            JPG, PNG or GIF. Max 2MB.
+            JPG, PNG or GIF.
           </p>
         </div>
       </div>

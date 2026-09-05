@@ -10,6 +10,7 @@ import { toast } from "sonner";
 export function RequestMentorshipForm({ mentorId, mentorName }: { mentorId: string; mentorName: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,8 +27,22 @@ export function RequestMentorshipForm({ mentorId, mentorName }: { mentorId: stri
     } else {
       toast.success(`Request sent to ${mentorName}!`);
       setMessage("");
+      setSubmitted(true);
     }
     setIsSubmitting(false);
+  }
+
+  if (submitted) {
+    return (
+      <div className="bg-amber-50 p-4 rounded-xl border border-amber-200">
+        <p className="text-sm font-medium text-amber-800">
+          Status: PENDING
+        </p>
+        <p className="text-xs text-amber-700 mt-1">
+          You have already sent a request to this mentor.
+        </p>
+      </div>
+    );
   }
 
   return (
