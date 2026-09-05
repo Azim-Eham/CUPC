@@ -9,6 +9,7 @@ import { createEvent } from "@/app/actions/events";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
 import { MediaUpload } from "@/components/ui/media-upload";
+import Image from "next/image";
 
 export function CreateEventDialog() {
   const [isOpen, setIsOpen] = useState(false);
@@ -93,8 +94,7 @@ export function CreateEventDialog() {
               />
               {coverImage && (
                 <div className="mt-4 relative h-40 w-full rounded-lg overflow-hidden border">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={coverImage} alt="Cover preview" className="object-cover w-full h-full" />
+                  <Image src={coverImage} alt="Cover preview" fill className="object-cover" />
                   <Button
                     type="button"
                     variant="destructive"
