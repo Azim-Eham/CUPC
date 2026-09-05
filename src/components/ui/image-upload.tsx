@@ -107,7 +107,7 @@ export function ImageUpload({ value, onChange, folder, label, fallbackIcon }: Im
             {isUploading ? "Uploading..." : value ? "Change Image" : "Upload Image"}
           </button>
           <p className="text-xs text-text-secondary">
-            JPG, PNG or GIF. Max 15MB.
+            JPG, PNG or GIF.
           </p>
         </div>
       </div>
