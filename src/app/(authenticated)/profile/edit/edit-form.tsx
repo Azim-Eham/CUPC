@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 import { Plus, X } from "lucide-react";
 
@@ -154,27 +155,27 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
 
         <div className="space-y-4 pt-4">
           <h3 className="text-lg font-medium text-brand-navy border-b border-[#e2e2ea] pb-2">Images</h3>
-          <p className="text-xs text-text-secondary">For now, provide direct image URLs. Full upload system planned.</p>
-          
+          <p className="text-xs text-text-secondary">Upload your profile and cover images.</p>
+
           <div className="grid gap-2">
-            <Label htmlFor="profileImage" className="text-brand-navy font-semibold">Avatar URL</Label>
-            <Input 
-              id="profileImage"
-              type="url"
+            <Label className="text-brand-navy font-semibold">Avatar Image</Label>
+            <ImageUpload
               value={formData.profileImage}
-              onChange={e => setFormData({...formData, profileImage: e.target.value})}
-              className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20"
+              onChange={(url) => setFormData({ ...formData, profileImage: url })}
+              folder="avatars"
+              label="Avatar Image"
+              fallbackIcon="user"
             />
           </div>
 
-          <div className="grid gap-2">
-            <Label htmlFor="coverImage" className="text-brand-navy font-semibold">Cover Image URL</Label>
-            <Input 
-              id="coverImage"
-              type="url"
+          <div className="grid gap-2 pt-2">
+            <Label className="text-brand-navy font-semibold">Cover Image</Label>
+            <ImageUpload
               value={formData.coverImage}
-              onChange={e => setFormData({...formData, coverImage: e.target.value})}
-              className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20"
+              onChange={(url) => setFormData({ ...formData, coverImage: url })}
+              folder="covers"
+              label="Cover Image"
+              fallbackIcon="image"
             />
           </div>
         </div>
