@@ -30,25 +30,8 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
   });
 
 
-  const [rawJsonInputs, setRawJsonInputs] = useState<Record<string, string>>(() => {
-    const inputs: Record<string, string> = {};
-    [
-      "education", "experience", "projects", "publications", "achievements", "socialLinks"
-    ].forEach(key => {
-      inputs[key] = JSON.stringify(initialData[key as keyof typeof initialData] || [], null, 2);
-    });
-    return inputs;
-  });
-  
   const [rawMentorExpertise, setRawMentorExpertise] = useState(() => ((initialData.mentorExpertise as string[]) || []).join(", "));
   const [rawResearchAreas, setRawResearchAreas] = useState(() => ((initialData.researchAreas as string[]) || []).join(", "));
-
-  const syncJsonToForm = (id: string, value: string) => {
-    try {
-      const parsed = JSON.parse(value);
-      if (Array.isArray(parsed)) setFormData(prev => ({...prev, [id]: parsed}));
-    } catch {}
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,16 +39,6 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
 
     try {
       const submissionData = { ...formData };
-
-      // Merge latest raw JSON state on submit (handles active focus / Enter key)
-      Object.entries(rawJsonInputs).forEach(([key, value]) => {
-        try {
-          const parsed = JSON.parse(value);
-          if (Array.isArray(parsed)) {
-            (submissionData as any)[key] = parsed;
-          }
-        } catch {}
-      });
 
       // Merge latest expertise
       submissionData.mentorExpertise = rawMentorExpertise
@@ -165,7 +138,7 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
         </div>
 
         <div className="space-y-4 pt-4">
-          <h3 className="text-lg font-medium text-brand-navy border-b border-[#e2e2ea] pb-2">Contact & Arrays (Raw JSON Edit)</h3>
+          <h3 className="text-lg font-medium text-brand-navy border-b border-[#e2e2ea] pb-2">Experience & Achievements</h3>
           <div className="grid gap-2">
             <Label htmlFor="phone" className="text-brand-navy font-semibold">Phone</Label>
             <Input 
@@ -184,13 +157,13 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
             { id: "socialLinks", label: "Social Links" } 
           ].map(({ id, label }) => (
             <div key={id} className="grid gap-2">
-              <Label htmlFor={id} className="text-brand-navy font-semibold">{label} (JSON Array)</Label>
-              <Textarea 
+              <Label htmlFor={id} className="text-brand-navy font-semibold">{label}</Label>
+              <Textarea
                 id={id}
-                value={rawJsonInputs[id]}
-                onChange={e => setRawJsonInputs(prev => ({...prev, [id]: e.target.value}))}
-                onBlur={e => syncJsonToForm(id, e.target.value)}
-                className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20 min-h-[100px] font-mono text-sm"
+                placeholder="1. First item&#10;2. Second item"
+                value={Array.isArray((formData as any)[id]) ? ((formData as any)[id] as string[]).join("\n") : ""}
+                onChange={e => setFormData(prev => ({...prev, [id]: e.target.value.split("\n").filter(Boolean)}))}
+                className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20 min-h-[100px]"
               />
             </div>
           ))}
