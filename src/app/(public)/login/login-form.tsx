@@ -45,7 +45,7 @@ export default function LoginForm() {
       const from = searchParams.get("from") || "/feed";
       router.push(from);
       router.refresh();
-    } catch (error) {
+    } catch {
       toast.error("An error occurred during login.");
     } finally {
       setIsLoading(false);
@@ -53,7 +53,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-100px)] w-full items-center justify-center px-4 bg-slate-900">
+    <div className="flex min-h-[calc(100dvh-100px)] w-full items-center justify-center px-4 bg-slate-900">
       <Card className="w-full max-w-md bg-slate-950 border-white/10 shadow-xl">
         <CardHeader className="space-y-1 text-center">
            <div className="flex justify-center mb-4">

@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { createPost } from "@/app/actions/post";
 import { toast } from "sonner";
-import { Bold, Italic, Strikethrough, Code, Heading1, Heading2, List, ListOrdered, Quote, X } from "lucide-react";
+import { Bold, Italic, Strikethrough,  Heading1, Heading2, List, ListOrdered, Quote, X } from "lucide-react";
 import { CardContent } from "@/components/ui/card";
 import { AcademicCard } from "@/components/ui/academic-card";
 import { MediaUpload } from "@/components/ui/media-upload";
@@ -46,7 +47,7 @@ export function CreatePost() {
       toast.success("Post created successfully!");
       editor?.commands.setContent("");
       setMediaUrls([]);
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong.");
     } finally {
       setIsSubmitting(false);
@@ -66,30 +67,30 @@ export function CreatePost() {
     <AcademicCard className="mb-8">
       <CardContent className="p-0">
         <div className="flex flex-wrap items-center gap-1 border-b border-[#e2e2ea] bg-surface-alt p-2">
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleBold().run())} data-active={editor.isActive("bold") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" aria-label="Bold" onClick={toggleAction(() => editor.chain().focus().toggleBold().run())} data-active={editor.isActive("bold") ? "" : undefined}>
             <Bold className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleItalic().run())} data-active={editor.isActive("italic") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" aria-label="Italic" onClick={toggleAction(() => editor.chain().focus().toggleItalic().run())} data-active={editor.isActive("italic") ? "" : undefined}>
             <Italic className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleStrike().run())} data-active={editor.isActive("strike") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" aria-label="Strikethrough" onClick={toggleAction(() => editor.chain().focus().toggleStrike().run())} data-active={editor.isActive("strike") ? "" : undefined}>
             <Strikethrough className="h-4 w-4" />
           </Button>
           <div className="mx-2 h-4 w-[1px] bg-[#e2e2ea]" />
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleHeading({ level: 1 }).run())} data-active={editor.isActive("heading", { level: 1 }) ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" aria-label="Heading 1" onClick={toggleAction(() => editor.chain().focus().toggleHeading({ level: 1 }).run())} data-active={editor.isActive("heading", { level: 1 }) ? "" : undefined}>
             <Heading1 className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleHeading({ level: 2 }).run())} data-active={editor.isActive("heading", { level: 2 }) ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" aria-label="Heading 2" onClick={toggleAction(() => editor.chain().focus().toggleHeading({ level: 2 }).run())} data-active={editor.isActive("heading", { level: 2 }) ? "" : undefined}>
             <Heading2 className="h-4 w-4" />
           </Button>
           <div className="mx-2 h-4 w-[1px] bg-[#e2e2ea]" />
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleBulletList().run())} data-active={editor.isActive("bulletList") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" aria-label="Bullet List" onClick={toggleAction(() => editor.chain().focus().toggleBulletList().run())} data-active={editor.isActive("bulletList") ? "" : undefined}>
             <List className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleOrderedList().run())} data-active={editor.isActive("orderedList") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" aria-label="Ordered List" onClick={toggleAction(() => editor.chain().focus().toggleOrderedList().run())} data-active={editor.isActive("orderedList") ? "" : undefined}>
             <ListOrdered className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" onClick={toggleAction(() => editor.chain().focus().toggleBlockquote().run())} data-active={editor.isActive("blockquote") ? "" : undefined}>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5" aria-label="Quote" onClick={toggleAction(() => editor.chain().focus().toggleBlockquote().run())} data-active={editor.isActive("blockquote") ? "" : undefined}>
             <Quote className="h-4 w-4" />
           </Button>
           <div className="mx-2 h-4 w-[1px] bg-[#e2e2ea]" />
@@ -106,10 +107,11 @@ export function CreatePost() {
                     {isVideo ? (
                       <video src={url} className="h-32 w-auto object-contain" controls />
                     ) : (
-                      <img src={url} alt="Upload preview" className="h-32 w-auto object-cover" />
+                      <Image src={url} alt="Upload preview" width={200} height={128} className="h-32 w-auto object-cover" />
                     )}
                     <button
                       type="button"
+                      aria-label="Remove media"
                       onClick={() => removeMedia(url)}
                       className="absolute top-1 right-1 bg-white/80 hover:bg-white rounded-full p-1 text-red-500 shadow-sm"
                     >

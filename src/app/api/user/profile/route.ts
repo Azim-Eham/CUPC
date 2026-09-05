@@ -32,7 +32,8 @@ export async function PUT(req: Request) {
       },
     });
 
-    return NextResponse.json(updated);
+    const { passwordHash, ...safeUser } = updated;
+    return NextResponse.json(safeUser);
   } catch (error) {
     console.error("Profile update error:", error);
     return NextResponse.json({ error: "Failed to update profile" }, { status: 500 });

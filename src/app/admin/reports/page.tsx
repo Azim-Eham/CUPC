@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
+import DOMPurify from "isomorphic-dompurify";
 import { dismissReport, removeContentAndDismissReport } from "@/app/actions/admin-reports";
 
 export default async function AdminReportsPage() {
@@ -77,7 +78,7 @@ export default async function AdminReportsPage() {
                   </div>
                   <div className="bg-muted p-4 rounded-md">
                     <p className="text-xs text-muted-foreground mb-2">Content by {authorName}:</p>
-                    <div className="text-sm prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: contentSnippet }} />
+                    <div className="text-sm prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(contentSnippet) }} />
                   </div>
                 </CardContent>
                 <CardFooter className="flex gap-2">

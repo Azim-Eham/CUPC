@@ -35,7 +35,7 @@ export function CreateAchievementForm() {
         router.push("/achievements");
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       setError("Something went wrong");
     } finally {
       setIsSubmitting(false);
@@ -61,7 +61,7 @@ export function CreateAchievementForm() {
             name="title"
             required
             placeholder="e.g. National Physics Olympiad Winners"
-            className="w-full px-4 py-3 rounded-xl border border-[#e2e2ea] focus:outline-none focus:ring-2 focus:ring-[#f2a93c]/50 focus:border-[#f2a93c] transition-all bg-surface-alt/50"
+            className="w-full px-4 py-3 rounded-xl border border-[#e2e2ea] focus:outline-none focus:ring-2 focus:ring-[#f2a93c]/50 focus:border-[#f2a93c] transition-all bg-surface-alt/50 appearance-none min-h-[50px] leading-normal"
           />
         </div>
 

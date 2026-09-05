@@ -103,7 +103,7 @@ export default async function MembersDirectoryPage({
             <StaggerItem key={member.id}>
               <Link href={`/profile/${member.id}`} className="block h-full">
               <AcademicCard className="overflow-hidden hover:border-amber-500/30 transition-colors group h-full">
-                <CardHeader className="p-6 pb-0 items-center text-center border-none">
+                <CardHeader className="p-6 pb-0 items-center text-center border-none min-w-0">
                   <Avatar className="h-24 w-24 mb-4 border border-[#e2e2ea] bg-surface-alt group-hover:border-amber-500/30 transition-colors">
                     <AvatarImage src={member.profileImage || ""} />
                     <AvatarFallback className="text-xl bg-transparent text-text-secondary">{member.name.charAt(0)}</AvatarFallback>
@@ -115,7 +115,7 @@ export default async function MembersDirectoryPage({
                     {member.role}
                   </Badge>
                 </CardHeader>
-                <CardContent className="p-6 pt-4 text-center text-sm text-text-secondary">
+                <CardContent className="p-6 pt-4 text-center text-sm text-text-secondary min-w-0">
                   <p className="truncate" title={member.department}>{member.department}</p>
                   {member.role === "STUDENT" && member.batch && (
                     <p className="text-text-secondary mt-1">Batch {member.batch}</p>

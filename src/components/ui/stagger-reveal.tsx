@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 export function StaggerReveal({
   children,
@@ -9,22 +10,34 @@ export function StaggerReveal({
   children: React.ReactNode;
   className?: string;
 }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    // Find all children marked as stagger-item
+    const items = containerRef.current.querySelectorAll('[data-stagger-item="true"]');
+    
+    if (items.length > 0) {
+      gsap.fromTo(
+        items,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+          clearProps: "all"
+        }
+      );
+    }
+  }, []);
+
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: 0.1,
-          },
-        },
-      }}
-      className={className}
-    >
+    <div ref={containerRef} className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -36,22 +49,8 @@ export function StaggerItem({
   className?: string;
 }) {
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: {
-            type: "spring",
-            stiffness: 100,
-            damping: 20
-          }
-        },
-      }}
-      className={className}
-    >
+    <div data-stagger-item="true" className={className} style={{ opacity: 0 }}>
       {children}
-    </motion.div>
+    </div>
   );
 }

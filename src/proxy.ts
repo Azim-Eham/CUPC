@@ -1,47 +1,35 @@
-import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { auth } from "@/lib/auth";
 
-export default auth((req) => {
-  const isLoggedIn = !!req.auth;
-  const isAuthPage = req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/register");
+const protectedRoutes = ["/feed", "/profile", "/events", "/resources", "/members", "/mentors", "/mentorship-dashboard"];
+const adminRoutes = ["/admin"];
 
-  // Exclude public assets and API auth routes
-  if (
-    req.nextUrl.pathname.startsWith("/_next") ||
-    req.nextUrl.pathname.startsWith("/api/auth") ||
-    req.nextUrl.pathname === "/" ||
-    req.nextUrl.pathname.startsWith("/about") ||
-    req.nextUrl.pathname.endsWith(".jpg") ||
-    req.nextUrl.pathname.endsWith(".png")
-  ) {
-    return NextResponse.next();
-  }
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
+  const isAdminRoute = adminRoutes.some(route => pathname.startsWith(route));
 
-  if (isAuthPage) {
-    if (isLoggedIn) {
-      return NextResponse.redirect(new URL("/feed", req.url));
+  if (isProtectedRoute || isAdminRoute) {
+    const session = await auth();
+
+    if (!session?.user) {
+      const url = new URL("/login", request.url);
+      url.searchParams.set("from", pathname);
+      return NextResponse.redirect(url);
     }
-    return NextResponse.next();
-  }
 
-  if (!isLoggedIn) {
-    let from = req.nextUrl.pathname;
-    if (req.nextUrl.search) {
-      from += req.nextUrl.search;
-    }
-    return NextResponse.redirect(new URL(`/login?from=${encodeURIComponent(from)}`, req.url));
-  }
-
-  // Admin route protection
-  if (req.nextUrl.pathname.startsWith("/admin")) {
-    if (req.auth?.user?.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/feed", req.url));
+    if (isAdminRoute && session.user.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/feed", request.url));
     }
   }
 
   return NextResponse.next();
-});
+}
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    "/((?!api/auth|_next/static|_next/image|favicon.ico).*)",
+  ],
 };

@@ -1,10 +1,36 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { ArrowLeft, Mail, BookOpen, GraduationCap, Link as LinkIcon, Building2 } from "lucide-react";
 import { PublicNavbar } from "@/components/public-navbar";
 import { AuthenticatedNavbar } from "@/components/authenticated-navbar";
 import facultyData from "../../../../../faculty/cu_physics_faculty.json";
+
+import type { Metadata } from "next";
+
+export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const params = await props.params;
+  const idParts = params.id.split('-');
+  const index = parseInt(idParts[1]) - 1;
+  const member = facultyData.faculty_members[index];
+
+  if (!member) {
+    return {
+      title: "Faculty Not Found | CUPC",
+    };
+  }
+
+  return {
+    title: `${member.name} | CUPC Faculty`,
+    description: `Profile of ${member.name}, ${member.designation} in the Department of Physics at the University of Chittagong.`,
+    openGraph: {
+      title: `${member.name} | CUPC Faculty`,
+      description: `Profile of ${member.name}, ${member.designation} at CUPC.`,
+      images: member.image_url ? [{ url: member.image_url }] : [],
+    },
+  };
+}
 
 export default async function FacultyProfilePage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -13,9 +39,9 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
 
   if (!isAuthenticated) {
     return (
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-dvh">
         {isAuthenticated ? <AuthenticatedNavbar session={session} /> : <PublicNavbar />}
-        <main className="flex-1 min-h-screen bg-surface-base font-sans pt-32 pb-16 px-6">
+        <main className="flex-1 min-h-dvh bg-surface-base font-sans pt-32 pb-16 px-6">
           <div className="max-w-3xl mx-auto text-center bg-white p-12 rounded-2xl shadow-sm border border-[#e2e2ea]">
             <h1 className="text-2xl font-bold text-brand-navy mb-4">Authentication Required</h1>
             <p className="text-text-secondary mb-8">Please log in to view detailed faculty profiles.</p>
@@ -47,9 +73,9 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
   const role = member.designation + (member.notes === "Chairman" ? " & Chairman" : "");
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-dvh">
       {isAuthenticated ? <AuthenticatedNavbar session={session} /> : <PublicNavbar />}
-      <main className="flex-1 pb-16 md:pb-0 min-h-screen bg-surface-base font-sans">
+      <main className="flex-1 pb-16 md:pb-0 min-h-dvh bg-surface-base font-sans">
         {/* Header */}
         <div className="bg-surface-navy w-full py-12 px-6 pt-24">
           <div className="max-w-4xl mx-auto">
@@ -60,7 +86,7 @@ export default async function FacultyProfilePage(props: { params: Promise<{ id: 
             
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
               {member.image_url ? (
-                <img src={member.image_url} alt={member.name} className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-xl bg-white border-4 border-white/10" />
+                <Image src={member.image_url} alt={member.name} width={160} height={160} className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-xl bg-white border-4 border-white/10" />
               ) : (
                 <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-[#12172e] border-4 border-white/10 flex items-center justify-center text-5xl font-bold text-white shadow-xl">
                   {getInitials(member.name)}

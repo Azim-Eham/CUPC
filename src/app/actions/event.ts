@@ -34,7 +34,7 @@ export async function createEvent(data: {
 
     revalidatePath("/events");
     return { success: true, event };
-  } catch (error) {
+  } catch {
     return { error: "Failed to create event." };
   }
 }
@@ -49,7 +49,7 @@ export async function deleteEvent(eventId: string) {
 
     revalidatePath("/events");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to delete event." };
   }
 }

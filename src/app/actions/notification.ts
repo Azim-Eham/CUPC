@@ -19,7 +19,7 @@ export async function markAsRead(notificationId: string) {
 
     revalidatePath("/notifications");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to mark as read." };
   }
 }
@@ -39,7 +39,7 @@ export async function markAllAsRead() {
 
     revalidatePath("/notifications");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to mark all as read." };
   }
 }

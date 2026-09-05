@@ -83,7 +83,7 @@ export function ImageUpload({ value, onChange, folder, label, fallbackIcon }: Im
             </button>
           </div>
         ) : (
-          <div className={`flex items-center justify-center border-2 border-dashed border-[#e2e2ea] bg-slate-50 text-slate-400 ${fallbackIcon === 'user' ? 'w-24 h-24 rounded-full' : 'w-48 h-24 rounded-md'}`}>
+          <div className={`flex items-center justify-center border-2 border-dashed border-[#e2e2ea] bg-slate-50 text-slate-500 ${fallbackIcon === 'user' ? 'w-24 h-24 rounded-full' : 'w-48 h-24 rounded-md'}`}>
             <Icon className="w-8 h-8 opacity-50" />
           </div>
         )}

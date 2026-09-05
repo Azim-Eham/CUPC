@@ -1,6 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { CreatePost } from "@/components/post/create-post";
+import dynamic from "next/dynamic";
+import DOMPurify from "isomorphic-dompurify";
+
+const CreatePost = dynamic(() => import("@/components/post/create-post").then(mod => mod.CreatePost), {
+    loading: () => <div className="h-32 bg-surface-alt animate-pulse rounded-2xl" />
+});
 import { PostCard } from "@/components/post/post-card";
 import { redirect } from "next/navigation";
 
@@ -31,6 +36,11 @@ export default async function FeedPage() {
     take: 20,
   });
 
+  const sanitizedPosts = posts.map(post => ({
+    ...post,
+    content: DOMPurify.sanitize(post.content)
+  }));
+
   return (
     <div className="max-w-2xl mx-auto py-8">
       <div className="mb-12 text-center">
@@ -41,7 +51,7 @@ export default async function FeedPage() {
       <CreatePost />
 
       <div className="space-y-8 mt-12">
-        {posts.map((post) => (
+        {sanitizedPosts.map((post) => (
           <PostCard
             key={post.id}
             post={post}

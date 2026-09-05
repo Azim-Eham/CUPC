@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -38,7 +39,7 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
 
 
   // Handlers for dynamic array fields
-  const addArrayItem = (field: string, defaultItem: any) => {
+  const addArrayItem = (field: string, defaultItem: unknown) => {
     setFormData(prev => ({
       ...prev,
       [field]: [...(prev[field as keyof typeof formData] as any[]), defaultItem]
@@ -203,6 +204,7 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
               <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
                 <div className="grid grid-cols-2 gap-2 flex-1">
                   <select
+                    aria-label="Degree"
                     className="flex h-10 w-full rounded-md border border-[#e2e2ea] bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20"
                     value={item.degree || "SSC"}
                     onChange={e => updateArrayItem("education", idx, "degree", e.target.value)}
@@ -214,11 +216,11 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
                     <option value="MSc">MSc/MA/MBA/Masters</option>
                     <option value="PhD">PhD</option>
                   </select>
-                  <Input placeholder="Institution" value={item.institution || ""} onChange={e => updateArrayItem("education", idx, "institution", e.target.value)} />
-                  <Input placeholder="Passing Year" value={item.year || ""} onChange={e => updateArrayItem("education", idx, "year", e.target.value)} />
-                  <Input placeholder="Result (GPA/CGPA)" value={item.result || ""} onChange={e => updateArrayItem("education", idx, "result", e.target.value)} />
+                  <Input aria-label="Institution" placeholder="Institution" value={item.institution || ""} onChange={e => updateArrayItem("education", idx, "institution", e.target.value)} />
+                  <Input aria-label="Passing Year" placeholder="Passing Year" value={item.year || ""} onChange={e => updateArrayItem("education", idx, "year", e.target.value)} />
+                  <Input aria-label="Result" placeholder="Result (GPA/CGPA)" value={item.result || ""} onChange={e => updateArrayItem("education", idx, "result", e.target.value)} />
                 </div>
-                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("education", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                <Button type="button" variant="ghost" size="icon" aria-label="Remove item" onClick={() => removeArrayItem("education", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
                   <X className="w-4 h-4" />
                 </Button>
               </div>
@@ -236,11 +238,11 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
             {formData.experience.map((item: any, idx: number) => (
               <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
                 <div className="grid grid-cols-2 gap-2 flex-1">
-                  <Input placeholder="Role / Position" value={item.role || ""} onChange={e => updateArrayItem("experience", idx, "role", e.target.value)} />
-                  <Input placeholder="Company / Organization" value={item.company || ""} onChange={e => updateArrayItem("experience", idx, "company", e.target.value)} />
-                  <Input className="col-span-2" placeholder="Duration (e.g. Jan 2022 - Present)" value={item.duration || ""} onChange={e => updateArrayItem("experience", idx, "duration", e.target.value)} />
+                  <Input aria-label="Role / Position" placeholder="Role / Position" value={item.role || ""} onChange={e => updateArrayItem("experience", idx, "role", e.target.value)} />
+                  <Input aria-label="Company / Organization" placeholder="Company / Organization" value={item.company || ""} onChange={e => updateArrayItem("experience", idx, "company", e.target.value)} />
+                  <Input aria-label="Duration" className="col-span-2" placeholder="Duration (e.g. Jan 2022 - Present)" value={item.duration || ""} onChange={e => updateArrayItem("experience", idx, "duration", e.target.value)} />
                 </div>
-                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("experience", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                <Button type="button" variant="ghost" size="icon" aria-label="Remove item" onClick={() => removeArrayItem("experience", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
                   <X className="w-4 h-4" />
                 </Button>
               </div>
@@ -258,16 +260,17 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
             {formData.projects.map((item: any, idx: number) => (
               <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
                 <div className="grid grid-cols-2 gap-2 flex-1">
-                  <Input placeholder="Project Name" value={item.name || ""} onChange={e => updateArrayItem("projects", idx, "name", e.target.value)} />
-                  <Input placeholder="Link (Optional)" value={item.link || ""} onChange={e => updateArrayItem("projects", idx, "link", e.target.value)} />
+                  <Input aria-label="Project Name" placeholder="Project Name" value={item.name || ""} onChange={e => updateArrayItem("projects", idx, "name", e.target.value)} />
+                  <Input aria-label="Link" placeholder="Link (Optional)" value={item.link || ""} onChange={e => updateArrayItem("projects", idx, "link", e.target.value)} />
                   <textarea
+                    aria-label="Description"
                     placeholder="Description"
                     value={item.description || ""}
                     onChange={e => updateArrayItem("projects", idx, "description", e.target.value)}
                     className="col-span-2 flex min-h-[60px] w-full rounded-md border border-[#e2e2ea] bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20"
                   />
                 </div>
-                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("projects", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                <Button type="button" variant="ghost" size="icon" aria-label="Remove item" onClick={() => removeArrayItem("projects", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
                   <X className="w-4 h-4" />
                 </Button>
               </div>
@@ -285,11 +288,11 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
             {formData.publications.map((item: any, idx: number) => (
               <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
                 <div className="grid grid-cols-2 gap-2 flex-1">
-                  <Input className="col-span-2" placeholder="Title" value={item.title || ""} onChange={e => updateArrayItem("publications", idx, "title", e.target.value)} />
-                  <Input placeholder="Conference / Journal" value={item.publisher || ""} onChange={e => updateArrayItem("publications", idx, "publisher", e.target.value)} />
-                  <Input placeholder="Link (Optional)" value={item.link || ""} onChange={e => updateArrayItem("publications", idx, "link", e.target.value)} />
+                  <Input aria-label="Title" className="col-span-2" placeholder="Title" value={item.title || ""} onChange={e => updateArrayItem("publications", idx, "title", e.target.value)} />
+                  <Input aria-label="Conference / Journal" placeholder="Conference / Journal" value={item.publisher || ""} onChange={e => updateArrayItem("publications", idx, "publisher", e.target.value)} />
+                  <Input aria-label="Link" placeholder="Link (Optional)" value={item.link || ""} onChange={e => updateArrayItem("publications", idx, "link", e.target.value)} />
                 </div>
-                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("publications", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                <Button type="button" variant="ghost" size="icon" aria-label="Remove item" onClick={() => removeArrayItem("publications", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
                   <X className="w-4 h-4" />
                 </Button>
               </div>
@@ -307,11 +310,11 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
             {formData.certificates.map((item: any, idx: number) => (
               <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
                 <div className="grid grid-cols-2 gap-2 flex-1">
-                  <Input className="col-span-2" placeholder="Certificate Name" value={item.name || (typeof item === 'string' ? item : "")} onChange={e => updateArrayItem("certificates", idx, "name", e.target.value)} />
-                  <Input placeholder="Issuer" value={item.issuer || ""} onChange={e => updateArrayItem("certificates", idx, "issuer", e.target.value)} />
-                  <Input placeholder="Year" value={item.year || ""} onChange={e => updateArrayItem("certificates", idx, "year", e.target.value)} />
+                  <Input aria-label="Certificate Name" className="col-span-2" placeholder="Certificate Name" value={item.name || (typeof item === 'string' ? item : "")} onChange={e => updateArrayItem("certificates", idx, "name", e.target.value)} />
+                  <Input aria-label="Issuer" placeholder="Issuer" value={item.issuer || ""} onChange={e => updateArrayItem("certificates", idx, "issuer", e.target.value)} />
+                  <Input aria-label="Year" placeholder="Year" value={item.year || ""} onChange={e => updateArrayItem("certificates", idx, "year", e.target.value)} />
                 </div>
-                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("certificates", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                <Button type="button" variant="ghost" size="icon" aria-label="Remove item" onClick={() => removeArrayItem("certificates", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
                   <X className="w-4 h-4" />
                 </Button>
               </div>
@@ -328,8 +331,8 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
             </div>
             {formData.socialLinks.map((item: any, idx: number) => (
               <div key={idx} className="flex gap-2 items-center">
-                <Input placeholder="https://..." value={typeof item === 'string' ? item : (item.url || "")} onChange={e => updateSimpleArrayItem("socialLinks", idx, e.target.value)} />
-                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("socialLinks", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50 flex-shrink-0">
+                <Input aria-label="Social Link URL" placeholder="https://..." value={typeof item === 'string' ? item : (item.url || "")} onChange={e => updateSimpleArrayItem("socialLinks", idx, e.target.value)} />
+                <Button type="button" variant="ghost" size="icon" aria-label="Remove item" onClick={() => removeArrayItem("socialLinks", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50 flex-shrink-0">
                   <X className="w-4 h-4" />
                 </Button>
               </div>

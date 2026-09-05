@@ -6,6 +6,15 @@ import { NavbarWrapper } from "@/components/navbar-wrapper";
 
 import { Home, Calendar, FileText, Users, GraduationCap, UserCircle, LogOut, Shield, LayoutDashboard } from "lucide-react";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default async function AuthenticatedLayout({
   children,
 }: {
@@ -18,7 +27,7 @@ export default async function AuthenticatedLayout({
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-dvh">
       <NavbarWrapper isAbsolute={false}>
         <div className="max-w-7xl mx-auto px-6 pt-4 md:pt-6">
           <header className="flex items-center justify-between py-4">
@@ -94,7 +103,7 @@ export default async function AuthenticatedLayout({
       </NavbarWrapper>
 
       {/* Mobile Nav (Bottom) */}
-      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-lg">
+      <div className="md:hidden fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-lg">
         <nav className="flex items-center gap-6 overflow-x-auto px-6 py-4 bg-brand-navy/95 backdrop-blur-md rounded-full border border-white/10 shadow-xl" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <style dangerouslySetInnerHTML={{__html: `nav::-webkit-scrollbar { display: none; }`}} />
           <Link href="/feed" className="shrink-0 text-[10px] font-semibold text-white/90 hover:text-white flex flex-col items-center gap-1">

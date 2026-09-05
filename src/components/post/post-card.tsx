@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
+import Image from "next/image";
+import DOMPurify from "isomorphic-dompurify";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -145,7 +147,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
                 {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
               </span>
               <DropdownMenu>
-                <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5 rounded-full" />}>
+                <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="h-10 w-10 md:h-8 md:w-8 p-0 text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5 rounded-full" />}>
                   <MoreHorizontal className="h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-white border-[#e2e2ea] text-text-secondary">
@@ -184,7 +186,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
                     {isVideo ? (
                       <video src={url} className="w-full h-auto max-h-[400px] object-contain" controls />
                     ) : (
-                      <img src={url} alt="Post attachment" className="w-full h-auto max-h-[400px] object-cover" />
+                      <Image src={url} alt="Post attachment" width={800} height={400} className="w-full h-auto max-h-[400px] object-cover" />
                     )}
                   </div>
                 );
@@ -199,7 +201,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
               <Button
                 variant="ghost"
                 size="sm"
-                className={`gap-2 h-8 px-3 rounded-full transition-colors group ${isLiked ? "text-rose-500 hover:text-rose-600 hover:bg-rose-50" : "text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5"}`}
+                className={`gap-2 h-10 px-4 md:h-8 md:px-3 rounded-full transition-colors group ${isLiked ? "text-rose-500 hover:text-rose-600 hover:bg-rose-50" : "text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5"}`}
                 onClick={handleLike}
               >
                 <Heart className={`h-4 w-4 transition-colors ${isLiked ? "fill-current" : "group-hover:text-rose-500"}`} />
@@ -210,7 +212,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
               <Button
                 variant="ghost"
                 size="sm"
-                className="gap-2 h-8 px-3 rounded-full text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5 transition-colors"
+                className="gap-2 h-10 px-4 md:h-8 md:px-3 rounded-full text-text-secondary hover:text-brand-navy hover:bg-[#12172e]/5 transition-colors"
                 onClick={() => setShowComments(!showComments)}
               >
                 <MessageSquare className="h-4 w-4" />
@@ -257,7 +259,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
                           <ReportDialog
                             commentId={comment.id}
                             trigger={
-                              <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-text-secondary hover:text-red-500 hover:bg-red-50 rounded-full">
+                              <Button variant="ghost" size="sm" className="h-10 w-10 md:h-6 md:w-6 p-0 text-text-secondary hover:text-red-500 hover:bg-red-50 rounded-full">
                                 <Flag className="h-3 w-3" />
                               </Button>
                             }

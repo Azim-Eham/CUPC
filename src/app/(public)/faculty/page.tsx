@@ -1,9 +1,16 @@
 import Link from "next/link";
+import Image from "next/image";
 import { auth } from "@/lib/auth";
 import { GraduationCap, Lock } from "lucide-react";
 import { PublicNavbar } from "@/components/public-navbar";
 import { AuthenticatedNavbar } from "@/components/authenticated-navbar";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Faculty Members | CUPC",
+  description: "Meet the distinguished faculty members of the Department of Physics at the University of Chittagong.",
+};
 
 // Hardcoded faculty list matching the homepage section
 const faculty = [
@@ -254,9 +261,9 @@ export default async function FacultyDirectoryPage() {
   const isAuthenticated = !!session?.user?.id;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-dvh">
       {isAuthenticated ? <AuthenticatedNavbar session={session} /> : <PublicNavbar />}
-      <main className="flex-1 pb-16 md:pb-0 min-h-screen bg-surface-base font-sans">
+      <main className="flex-1 pb-16 md:pb-0 min-h-dvh bg-surface-base font-sans">
       <div className="bg-surface-navy w-full py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-2 mb-4">
@@ -292,14 +299,14 @@ export default async function FacultyDirectoryPage() {
                 <div key={member.id} className="bg-surface-card border border-[#e2e2ea] rounded-2xl p-6 flex flex-col h-full hover:shadow-[0_4px_20px_-2px_rgba(18,23,46,0.05)] transition-shadow text-center items-center">
                   
                   {member.imageUrl ? (
-                     <img src={member.imageUrl} alt={member.name} className="w-24 h-24 rounded-full object-cover shadow-sm mb-4 bg-surface-alt" />
+                     <Image src={member.imageUrl} alt={member.name} width={96} height={96} className="w-24 h-24 rounded-full object-cover shadow-sm mb-4 bg-surface-alt" />
                   ) : (
                     <div className="w-24 h-24 rounded-full bg-[#12172e] flex items-center justify-center text-3xl font-bold text-text-inverse mb-4 shadow-sm">
                       {member.initials}
                     </div>
                   )}
                   
-                  <h3 className="text-lg font-bold text-brand-navy mb-1">{member.name}</h3>
+                  <h2 className="text-lg font-bold text-brand-navy mb-1">{member.name}</h2>
                   <p className="text-sm font-semibold text-[#f2a93c]">{member.designation}</p>
 
                   <div className="pt-6 mt-auto w-full">

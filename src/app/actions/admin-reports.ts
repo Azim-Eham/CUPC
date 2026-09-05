@@ -25,7 +25,7 @@ export async function dismissReport(reportId: string) {
 
     revalidatePath("/admin/reports");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to dismiss report." };
   }
 }

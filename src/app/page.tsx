@@ -87,11 +87,18 @@ import { PublicNavbar } from "@/components/public-navbar";
 import { HeroBackground } from "@/components/hero-background";
 import { ScrollAnimations } from "@/components/scroll-animations";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "CUPC - Chittagong University Physics Club",
+  description: "Join the Chittagong University Physics Club. Discovering the universe through physics, research, mentorship, and community events.",
+};
+
 export default async function LandingPage() {
   const mentors = await getFeaturedMentors();
   const dbEvents = await getUpcomingEvents();
   return (
-    <div className="min-h-screen bg-surface-base flex flex-col font-sans">
+    <div className="min-h-dvh bg-surface-base flex flex-col font-sans">
       <ScrollAnimations />
       <PublicNavbar isAbsolute={true} />
 
@@ -167,7 +174,7 @@ export default async function LandingPage() {
           <div data-anim="about-card" className="flex-1 w-full max-w-md">
             <div className="bg-[#12172e] rounded-[2rem] p-12 flex flex-col items-center justify-center text-center shadow-[0_20px_40px_-10px_rgba(18,23,46,0.3)] relative overflow-hidden group hover:-translate-y-2 hover:scale-[1.02] duration-300 transition-transform duration-500 border border-white/5">
                <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#f2a93c]/20 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150"></div>
-               <Image src="/CUPC_logo.jpg" alt="CUPC" width={112} height={112} className="mb-8 rounded-2xl object-contain bg-white p-2 relative z-10" />
+               <Image src="/CUPC_logo.jpg" alt="CUPC" width={112} height={112} priority className="mb-8 rounded-2xl object-contain bg-white p-2 relative z-10" />
                <div className="font-display text-2xl font-bold text-white mb-2 tracking-tight">Established 2026</div>
                <div className="text-white/60 text-base">University of Chittagong</div>
             </div>
@@ -431,15 +438,15 @@ export default async function LandingPage() {
           </div>
 
           <div className="flex items-center gap-10 mb-16">
-            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform duration-300">
-              <Globe className="w-7 h-7" />
-              <span className="sr-only">Website</span>
+            <a href="https://www.facebook.com/cuphysicsclub/" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+              <span className="sr-only">Facebook</span>
             </a>
-            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform duration-300">
+            <a href="mailto:contact@cuphysicsclub.com" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform">
               <Mail className="w-7 h-7" />
               <span className="sr-only">Contact</span>
             </a>
-            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform duration-300">
+            <a href="#" className="text-white/50 hover:text-[#f2a93c] transition-colors hover:-translate-y-1 hover:scale-105 duration-300 transform">
               <MapPin className="w-7 h-7" />
               <span className="sr-only">Location</span>
             </a>

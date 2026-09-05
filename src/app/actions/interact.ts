@@ -21,7 +21,7 @@ export async function addComment(postId: string, content: string, parentId?: str
 
     revalidatePath("/feed");
     return { success: true, comment };
-  } catch (error) {
+  } catch {
     return { error: "Failed to add comment." };
   }
 }
@@ -58,7 +58,7 @@ export async function toggleReaction(postId: string, type: string) {
 
     revalidatePath("/feed");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to toggle reaction." };
   }
 }

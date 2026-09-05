@@ -31,7 +31,7 @@ export async function createResource(data: {
 
     revalidatePath("/resources");
     return { success: true, resource };
-  } catch (error) {
+  } catch {
     return { error: "Failed to create resource." };
   }
 }
@@ -58,7 +58,7 @@ export async function deleteResource(resourceId: string) {
 
     revalidatePath("/resources");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to delete resource." };
   }
 }

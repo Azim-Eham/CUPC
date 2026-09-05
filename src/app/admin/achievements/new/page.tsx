@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { NavbarWrapper } from "@/components/navbar-wrapper";
 import { AuthenticatedNavbar } from "@/components/authenticated-navbar";
 import { CreateAchievementForm } from "./create-achievement-form";
 
@@ -12,7 +11,7 @@ export default async function NewAchievementPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-dvh">
       <AuthenticatedNavbar session={session} />
       <main className="flex-1 w-full max-w-3xl mx-auto py-8 px-6 lg:py-12 pb-24 md:pb-12">
         <div className="mb-8">

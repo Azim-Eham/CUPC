@@ -25,7 +25,7 @@ export async function toggleMentorAvailability(available: boolean, expertise: st
     revalidatePath("/profile");
     revalidatePath("/mentors");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to update availability." };
   }
 }
@@ -60,7 +60,7 @@ export async function requestMentorship(mentorId: string, message: string) {
 
     revalidatePath(`/mentors/${mentorId}`);
     return { success: true, request };
-  } catch (error) {
+  } catch {
     return { error: "Failed to send mentorship request." };
   }
 }
@@ -88,7 +88,7 @@ export async function respondToMentorship(requestId: string, status: "ACCEPTED" 
     revalidatePath("/profile");
     revalidatePath("/mentorship-dashboard");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to respond to request." };
   }
 }

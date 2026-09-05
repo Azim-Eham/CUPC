@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Search } from "lucide-react";
 
@@ -36,8 +35,8 @@ export default async function MentorsDirectoryPage() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-1 pb-16 md:pb-0 min-h-screen bg-surface-base font-sans">
+    <div className="flex flex-col min-h-dvh">
+      <main className="flex-1 pb-16 md:pb-0 min-h-dvh bg-surface-base font-sans">
       <div className="bg-surface-navy w-full py-16 px-6 rounded-3xl">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div>

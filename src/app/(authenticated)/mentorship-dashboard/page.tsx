@@ -50,7 +50,7 @@ export default async function MentorshipDashboardPage() {
           ) : (
             <div className="grid md:grid-cols-2 gap-6">
               {pendingRequests.map(req => (
-                <RequestCard key={req.id} request={req as any} />
+                <RequestCard key={req.id} request={req as unknown as Parameters<typeof RequestCard>[0]["request"]} />
               ))}
             </div>
           )}
@@ -61,7 +61,7 @@ export default async function MentorshipDashboardPage() {
             <h2 className="text-xl font-bold text-brand-navy mb-6">Past Requests</h2>
             <div className="grid md:grid-cols-2 gap-6 opacity-75">
               {pastRequests.map(req => (
-                <RequestCard key={req.id} request={req as any} />
+                <RequestCard key={req.id} request={req as unknown as Parameters<typeof RequestCard>[0]["request"]} />
               ))}
             </div>
           </section>

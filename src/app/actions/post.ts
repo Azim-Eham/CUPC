@@ -20,7 +20,7 @@ export async function createPost(content: string, images: string[] = []) {
 
     revalidatePath("/feed");
     return { success: true, post };
-  } catch (error) {
+  } catch {
     return { error: "Failed to create post." };
   }
 }
@@ -48,7 +48,7 @@ export async function deletePost(postId: string) {
 
     revalidatePath("/feed");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to delete post." };
   }
 }

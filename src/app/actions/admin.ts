@@ -24,7 +24,7 @@ export async function approveUser(userId: string) {
 
     revalidatePath("/admin/users");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to approve user." };
   }
 }
@@ -42,7 +42,7 @@ export async function rejectUser(userId: string) {
 
     revalidatePath("/admin/users");
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to reject user." };
   }
 }

@@ -28,7 +28,7 @@ export async function reportContent(data: {
     // TODO: Send email to admin
 
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Failed to submit report." };
   }
 }

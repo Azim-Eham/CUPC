@@ -55,7 +55,7 @@ export function ReportDialog({ postId, commentId, resourceId, reportedUserId, tr
       toast.success("Report submitted successfully.");
       setOpen(false);
       setReason("");
-    } catch (error) {
+    } catch {
       toast.error("Failed to submit report.");
     } finally {
       setIsSubmitting(false);

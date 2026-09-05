@@ -13,6 +13,7 @@ export default async function AdminUsersPage() {
   }
 
   const pendingUsers = await prisma.user.findMany({
+    select: { id: true, name: true, email: true, role: true, department: true, studentId: true, batch: true, session: true, createdAt: true },
     where: { status: "PENDING" },
     orderBy: { createdAt: "desc" },
   });
