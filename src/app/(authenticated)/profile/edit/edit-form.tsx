@@ -191,25 +191,150 @@ export function EditProfileForm({ initialData }: { initialData: Record<string, u
               className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20"
             />
           </div>
-          {[ 
-            { id: "education", label: "Education" }, 
-            { id: "experience", label: "Experience" }, 
-            { id: "projects", label: "Projects" }, 
-            { id: "publications", label: "Publications" }, 
-            { id: "achievements", label: "Achievements" }, 
-            { id: "socialLinks", label: "Social Links" } 
-          ].map(({ id, label }) => (
-            <div key={id} className="grid gap-2">
-              <Label htmlFor={id} className="text-brand-navy font-semibold">{label}</Label>
-              <Textarea
-                id={id}
-                placeholder="1. First item&#10;2. Second item"
-                value={Array.isArray((formData as any)[id]) ? ((formData as any)[id] as string[]).join("\n") : ""}
-                onChange={e => setFormData(prev => ({...prev, [id]: e.target.value.split("\n").filter(Boolean)}))}
-                className="bg-white border-[#e2e2ea] text-brand-navy focus-visible:ring-brand-navy/20 min-h-[100px]"
-              />
+          {/* Education - BD System */}
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <Label className="text-brand-navy font-semibold">Education</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => addArrayItem("education", { degree: "SSC", institution: "", year: "", result: "" })}>
+                <Plus className="w-4 h-4 mr-1" /> Add Education
+              </Button>
             </div>
-          ))}
+            {formData.education.map((item: any, idx: number) => (
+              <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
+                <div className="grid grid-cols-2 gap-2 flex-1">
+                  <select
+                    className="flex h-10 w-full rounded-md border border-[#e2e2ea] bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20"
+                    value={item.degree || "SSC"}
+                    onChange={e => updateArrayItem("education", idx, "degree", e.target.value)}
+                  >
+                    <option value="JSC">JSC/JDC</option>
+                    <option value="SSC">SSC/Dakhil/O-Level</option>
+                    <option value="HSC">HSC/Alim/A-Level</option>
+                    <option value="BSc">BSc/BA/BBA/Honours</option>
+                    <option value="MSc">MSc/MA/MBA/Masters</option>
+                    <option value="PhD">PhD</option>
+                  </select>
+                  <Input placeholder="Institution" value={item.institution || ""} onChange={e => updateArrayItem("education", idx, "institution", e.target.value)} />
+                  <Input placeholder="Passing Year" value={item.year || ""} onChange={e => updateArrayItem("education", idx, "year", e.target.value)} />
+                  <Input placeholder="Result (GPA/CGPA)" value={item.result || ""} onChange={e => updateArrayItem("education", idx, "result", e.target.value)} />
+                </div>
+                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("education", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Experience */}
+          <div className="space-y-3 pt-2">
+            <div className="flex justify-between items-center">
+              <Label className="text-brand-navy font-semibold">Experience</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => addArrayItem("experience", { role: "", company: "", duration: "" })}>
+                <Plus className="w-4 h-4 mr-1" /> Add Experience
+              </Button>
+            </div>
+            {formData.experience.map((item: any, idx: number) => (
+              <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
+                <div className="grid grid-cols-2 gap-2 flex-1">
+                  <Input placeholder="Role / Position" value={item.role || ""} onChange={e => updateArrayItem("experience", idx, "role", e.target.value)} />
+                  <Input placeholder="Company / Organization" value={item.company || ""} onChange={e => updateArrayItem("experience", idx, "company", e.target.value)} />
+                  <Input className="col-span-2" placeholder="Duration (e.g. Jan 2022 - Present)" value={item.duration || ""} onChange={e => updateArrayItem("experience", idx, "duration", e.target.value)} />
+                </div>
+                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("experience", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Projects */}
+          <div className="space-y-3 pt-2">
+            <div className="flex justify-between items-center">
+              <Label className="text-brand-navy font-semibold">Projects</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => addArrayItem("projects", { name: "", description: "", link: "" })}>
+                <Plus className="w-4 h-4 mr-1" /> Add Project
+              </Button>
+            </div>
+            {formData.projects.map((item: any, idx: number) => (
+              <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
+                <div className="grid grid-cols-2 gap-2 flex-1">
+                  <Input placeholder="Project Name" value={item.name || ""} onChange={e => updateArrayItem("projects", idx, "name", e.target.value)} />
+                  <Input placeholder="Link (Optional)" value={item.link || ""} onChange={e => updateArrayItem("projects", idx, "link", e.target.value)} />
+                  <textarea
+                    placeholder="Description"
+                    value={item.description || ""}
+                    onChange={e => updateArrayItem("projects", idx, "description", e.target.value)}
+                    className="col-span-2 flex min-h-[60px] w-full rounded-md border border-[#e2e2ea] bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy/20"
+                  />
+                </div>
+                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("projects", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Publications */}
+          <div className="space-y-3 pt-2">
+            <div className="flex justify-between items-center">
+              <Label className="text-brand-navy font-semibold">Publications</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => addArrayItem("publications", { title: "", publisher: "", link: "" })}>
+                <Plus className="w-4 h-4 mr-1" /> Add Publication
+              </Button>
+            </div>
+            {formData.publications.map((item: any, idx: number) => (
+              <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
+                <div className="grid grid-cols-2 gap-2 flex-1">
+                  <Input className="col-span-2" placeholder="Title" value={item.title || ""} onChange={e => updateArrayItem("publications", idx, "title", e.target.value)} />
+                  <Input placeholder="Conference / Journal" value={item.publisher || ""} onChange={e => updateArrayItem("publications", idx, "publisher", e.target.value)} />
+                  <Input placeholder="Link (Optional)" value={item.link || ""} onChange={e => updateArrayItem("publications", idx, "link", e.target.value)} />
+                </div>
+                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("publications", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Certificates */}
+          <div className="space-y-3 pt-2">
+            <div className="flex justify-between items-center">
+              <Label className="text-brand-navy font-semibold">Certificates</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => addArrayItem("certificates", { name: "", issuer: "", year: "" })}>
+                <Plus className="w-4 h-4 mr-1" /> Add Certificate
+              </Button>
+            </div>
+            {formData.certificates.map((item: any, idx: number) => (
+              <div key={idx} className="flex gap-2 items-start border border-[#e2e2ea] p-3 rounded-md bg-slate-50">
+                <div className="grid grid-cols-2 gap-2 flex-1">
+                  <Input className="col-span-2" placeholder="Certificate Name" value={item.name || (typeof item === 'string' ? item : "")} onChange={e => updateArrayItem("certificates", idx, "name", e.target.value)} />
+                  <Input placeholder="Issuer" value={item.issuer || ""} onChange={e => updateArrayItem("certificates", idx, "issuer", e.target.value)} />
+                  <Input placeholder="Year" value={item.year || ""} onChange={e => updateArrayItem("certificates", idx, "year", e.target.value)} />
+                </div>
+                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("certificates", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Social Links */}
+          <div className="space-y-3 pt-2">
+            <div className="flex justify-between items-center">
+              <Label className="text-brand-navy font-semibold">Social Links</Label>
+              <Button type="button" variant="outline" size="sm" onClick={() => addArrayItem("socialLinks", "")}>
+                <Plus className="w-4 h-4 mr-1" /> Add Link
+              </Button>
+            </div>
+            {formData.socialLinks.map((item: any, idx: number) => (
+              <div key={idx} className="flex gap-2 items-center">
+                <Input placeholder="https://..." value={typeof item === 'string' ? item : (item.url || "")} onChange={e => updateSimpleArrayItem("socialLinks", idx, e.target.value)} />
+                <Button type="button" variant="ghost" size="icon" onClick={() => removeArrayItem("socialLinks", idx)} className="text-red-500 hover:text-red-700 hover:bg-red-50 flex-shrink-0">
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
         </div>
 
         {(initialData.role === "ALUMNI" || initialData.role === "FACULTY") && (
