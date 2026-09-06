@@ -4,6 +4,7 @@ import Image from "next/image";
 import { signOut } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { NavbarWrapper } from "@/components/navbar-wrapper";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Home, Calendar, FileText, Users, GraduationCap, UserCircle, LogOut, Shield, LayoutDashboard } from "lucide-react";
 
@@ -68,9 +69,17 @@ export function AuthenticatedNavbar({ session }: { session: any }) {
             </nav>
 
             <div className="hidden md:flex items-center gap-4">
-              <span className="text-sm font-medium text-white/70">
-                {session?.user.name}
-              </span>
+              <div className="flex items-center gap-2.5 bg-white/5 pr-4 pl-1.5 py-1.5 rounded-full border border-white/10">
+                <Avatar className="h-7 w-7 border border-white/20">
+                  <AvatarImage src={session?.user?.profileImage || ""} />
+                  <AvatarFallback className="bg-[#f2a93c] text-brand-navy text-xs font-bold">
+                    {session?.user?.name?.charAt(0) || "U"}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-sm font-medium text-white/90 max-w-[120px] truncate" title={session?.user?.name}>
+                  {session?.user?.name?.split(' ')[0]}
+                </span>
+              </div>
               <form action={async () => {
                 "use server";
                 await signOut({ redirectTo: "/" });
