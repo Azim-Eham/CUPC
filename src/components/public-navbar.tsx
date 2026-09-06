@@ -51,17 +51,19 @@ export async function PublicNavbar({ isAbsolute = false, hideLinks = false }: { 
           </nav>
           )}
           
-                    <div className="hidden md:flex items-center gap-4">
+                    <div className="flex items-center gap-2 md:gap-4">
             {session ? (
-              <Link href="/feed" className="bg-[#f2a93c] text-brand-navy text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-[#f5b942] transition-all">
-                Dashboard
+              <Link href="/feed" className="bg-[#f2a93c] text-brand-navy text-xs md:text-sm font-semibold px-4 py-2 md:px-6 md:py-2.5 rounded-full hover:bg-[#f5b942] transition-all flex items-center gap-2">
+                <LayoutDashboard className="w-4 h-4 md:hidden" />
+                <span className="hidden md:inline">Dashboard</span>
               </Link>
             ) : (
               !hideLinks && (<>
-                <Link href="/login" className="text-sm font-semibold text-white px-5 py-2 rounded-full border border-white/20 hover:bg-white/10 transition-colors">
-                  Log in
+                <Link href="/login" className="text-xs md:text-sm font-semibold text-white px-3 py-2 md:px-5 md:py-2 rounded-full border border-white/20 hover:bg-white/10 transition-colors flex items-center gap-1.5">
+                  <LogIn className="w-3.5 h-3.5 md:hidden" />
+                  <span>Log in</span>
                 </Link>
-                <Link href="/register" className="bg-[#f2a93c] text-brand-navy text-sm font-bold px-6 py-2 rounded-full hover:bg-[#f5b942] transition-all">
+                <Link href="/register" className="hidden sm:flex bg-[#f2a93c] text-brand-navy text-sm font-bold px-6 py-2 rounded-full hover:bg-[#f5b942] transition-all">
                   Join Us
                 </Link>
               </>)
