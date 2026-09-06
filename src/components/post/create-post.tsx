@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { createPost } from "@/app/actions/post";
 import { toast } from "sonner";
@@ -15,6 +16,7 @@ import { MediaUpload } from "@/components/ui/media-upload";
 export function CreatePost() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mediaUrls, setMediaUrls] = useState<string[]>([]);
+  const router = useRouter();
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -47,6 +49,7 @@ export function CreatePost() {
       toast.success("Post created successfully!");
       editor?.commands.setContent("");
       setMediaUrls([]);
+      router.refresh();
     } catch {
       toast.error("Something went wrong.");
     } finally {
