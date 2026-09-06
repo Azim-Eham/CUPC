@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import dynamic from "next/dynamic";
-import DOMPurify from "isomorphic-dompurify";
 
 const CreatePost = dynamic(() => import("@/components/post/create-post").then(mod => mod.CreatePost), {
     loading: () => <div className="h-32 bg-surface-alt animate-pulse rounded-2xl" />
@@ -36,10 +35,8 @@ export default async function FeedPage() {
     take: 20,
   });
 
-  const sanitizedPosts = posts.map(post => ({
-    ...post,
-    content: DOMPurify.sanitize(post.content)
-  }));
+  // Sanitization happens client-side in PostCard
+  const sanitizedPosts = posts;
 
   return (
     <div className="max-w-2xl mx-auto py-8">
