@@ -174,7 +174,7 @@ export function PostCard({ post, currentUserId, currentUserRole }: PostCardProps
 
         <CardContent>
           <div
-            className="prose prose-brand max-w-none text-base leading-relaxed text-brand-navy mb-4"
+            className="prose max-w-none text-base leading-relaxed [&_*]:text-brand-navy mb-4"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
           {post.images && post.images.length > 0 && (
