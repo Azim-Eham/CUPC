@@ -7,6 +7,7 @@ const CreatePost = dynamic(() => import("@/components/post/create-post").then(mo
 });
 import { PostCard } from "@/components/post/post-card";
 import { redirect } from "next/navigation";
+import { StaggerReveal } from "@/components/ui/stagger-reveal";
 
 export default async function FeedPage() {
   const session = await auth();
@@ -47,7 +48,7 @@ export default async function FeedPage() {
 
       <CreatePost />
 
-      <div className="space-y-8 mt-12">
+      <StaggerReveal className="space-y-8 mt-12">
         {sanitizedPosts.map((post) => (
           <PostCard
             key={post.id}
@@ -59,7 +60,7 @@ export default async function FeedPage() {
         {posts.length === 0 && (
           <p className="text-center text-text-secondary py-12">No posts yet. Be the first to share something!</p>
         )}
-      </div>
+      </StaggerReveal>
     </div>
   );
 }
