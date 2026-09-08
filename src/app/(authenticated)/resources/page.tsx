@@ -13,12 +13,6 @@ export default async function ResourcesPage({
 }: {
   searchParams: Promise<{ category?: string; q?: string }>;
 }) {
-  const session = await auth();
-
-  if (!session?.user?.id) {
-    redirect("/login");
-  }
-
   const { category, q } = await searchParams;
 
   const whereClause: {
@@ -40,15 +34,22 @@ export default async function ResourcesPage({
     ];
   }
 
-  const resources = await prisma.resource.findMany({
-    where: whereClause,
-    orderBy: { createdAt: "desc" },
-    include: {
-      author: {
-        select: { name: true },
+  const [session, resources] = await Promise.all([
+    auth(),
+    prisma.resource.findMany({
+      where: whereClause,
+      orderBy: { createdAt: "desc" },
+      include: {
+        author: {
+          select: { name: true },
+        },
       },
-    },
-  });
+    }),
+  ]);
+
+  if (!session?.user?.id) {
+    redirect("/login");
+  }
 
   return (
     <div className="max-w-5xl mx-auto py-8">

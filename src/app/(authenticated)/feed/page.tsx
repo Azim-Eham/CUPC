@@ -10,31 +10,32 @@ import { redirect } from "next/navigation";
 import { StaggerReveal } from "@/components/ui/stagger-reveal";
 
 export default async function FeedPage() {
-  const session = await auth();
+  const [session, posts] = await Promise.all([
+    auth(),
+    prisma.post.findMany({
+      where: { isRemoved: false },
+      orderBy: { createdAt: "desc" },
+      include: {
+        author: {
+          select: { id: true, name: true, role: true, department: true, profileImage: true },
+        },
+        reactions: true,
+        comments: {
+          orderBy: { createdAt: "asc" },
+          include: {
+            author: {
+              select: { id: true, name: true, profileImage: true },
+            },
+          },
+        },
+      },
+      take: 20,
+    }),
+  ]);
 
   if (!session?.user?.id) {
     redirect("/login");
   }
-
-  const posts = await prisma.post.findMany({
-    where: { isRemoved: false },
-    orderBy: { createdAt: "desc" },
-    include: {
-      author: {
-        select: { id: true, name: true, role: true, department: true, profileImage: true },
-      },
-      reactions: true,
-      comments: {
-        orderBy: { createdAt: "asc" },
-        include: {
-          author: {
-            select: { id: true, name: true, profileImage: true },
-          },
-        },
-      },
-    },
-    take: 20,
-  });
 
   // Sanitization happens client-side in PostCard
   const sanitizedPosts = posts;
