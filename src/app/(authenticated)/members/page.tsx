@@ -12,15 +12,9 @@ import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
 export default async function MembersDirectoryPage({
   searchParams,
 }: {
-  searchParams: { role?: string; q?: string };
+  searchParams: Promise<{ role?: string; q?: string }>;
 }) {
-  const session = await auth();
-
-  if (!session?.user?.id) {
-    redirect("/login");
-  }
-
-  const { role, q } = searchParams;
+  const { role, q } = await searchParams;
 
   const whereClause: {
     status: UserStatus;
@@ -41,20 +35,27 @@ export default async function MembersDirectoryPage({
     ];
   }
 
-  const members = await prisma.user.findMany({
-    where: whereClause,
-    orderBy: { name: "asc" },
-    select: {
-      id: true,
-      name: true,
-      role: true,
-      department: true,
-      profileImage: true,
-      batch: true,
-      designation: true,
-      organization: true,
-    },
-  });
+  const [session, members] = await Promise.all([
+    auth(),
+    prisma.user.findMany({
+      where: whereClause,
+      orderBy: { name: "asc" },
+      select: {
+        id: true,
+        name: true,
+        role: true,
+        department: true,
+        profileImage: true,
+        batch: true,
+        designation: true,
+        organization: true,
+      },
+    }),
+  ]);
+
+  if (!session?.user?.id) {
+    redirect("/login");
+  }
 
   return (
     <div className="max-w-6xl mx-auto py-8">

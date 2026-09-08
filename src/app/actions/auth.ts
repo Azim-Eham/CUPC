@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validations/auth";
+import { sendAdminNotification } from "@/lib/email";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
 
@@ -36,7 +37,19 @@ export async function registerUser(data: z.infer<typeof registerSchema>) {
       },
     });
 
-    // TODO: Trigger email notification to admin here if desired
+    try {
+      const admins = await prisma.user.findMany({
+        where: { role: "ADMIN" },
+        select: { email: true },
+      });
+      const adminEmails = admins.map(a => a.email).filter(Boolean);
+
+      if (adminEmails.length > 0) {
+        await sendAdminNotification(adminEmails, validatedData.name, validatedData.email);
+      }
+    } catch (error) {
+      console.error("Failed to send admin notification", error);
+    }
 
     return { success: true };
   } catch (error) {

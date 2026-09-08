@@ -10,16 +10,17 @@ import { CreateEventForm } from "@/app/admin/events/create-event-form";
 import { DeleteEventButton } from "./delete-event";
 
 export default async function EventsPage() {
-  const session = await auth();
+  const [session, events] = await Promise.all([
+    auth(),
+    prisma.event.findMany({
+      where: { isPublished: true },
+      orderBy: { date: "asc" },
+    }),
+  ]);
 
   if (!session?.user?.id) {
     redirect("/login");
   }
-
-  const events = await prisma.event.findMany({
-    where: { isPublished: true },
-    orderBy: { date: "asc" },
-  });
 
   const upcomingEvents = events.filter((e) => new Date(e.date) >= new Date());
   const pastEvents = events.filter((e) => new Date(e.date) < new Date());
