@@ -38,7 +38,15 @@ export async function registerUser(data: z.infer<typeof registerSchema>) {
     });
 
     try {
-      await sendAdminNotification(validatedData.name, validatedData.email);
+      const admins = await prisma.user.findMany({
+        where: { role: "ADMIN" },
+        select: { email: true },
+      });
+      const adminEmails = admins.map(a => a.email).filter(Boolean);
+
+      if (adminEmails.length > 0) {
+        await sendAdminNotification(adminEmails, validatedData.name, validatedData.email);
+      }
     } catch (error) {
       console.error("Failed to send admin notification", error);
     }
