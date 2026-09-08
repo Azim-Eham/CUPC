@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validations/auth";
+import { sendAdminNotification } from "@/lib/email";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
 
@@ -36,7 +37,11 @@ export async function registerUser(data: z.infer<typeof registerSchema>) {
       },
     });
 
-    // TODO: Trigger email notification to admin here if desired
+    try {
+      await sendAdminNotification(validatedData.name, validatedData.email);
+    } catch (error) {
+      console.error("Failed to send admin notification", error);
+    }
 
     return { success: true };
   } catch (error) {
