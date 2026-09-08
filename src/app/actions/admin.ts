@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { sendApprovalEmail } from "@/lib/email";
 
 async function requireAdmin() {
   const session = await auth();
@@ -15,12 +16,17 @@ export async function approveUser(userId: string) {
   try {
     await requireAdmin();
 
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: { status: "APPROVED" },
+      select: { email: true, name: true }
     });
 
-    // TODO: Send approval email notification
+    try {
+      await sendApprovalEmail(updatedUser.email, updatedUser.name);
+    } catch (error) {
+      console.error("Failed to send approval email", error);
+    }
 
     revalidatePath("/admin/users");
     return { success: true };
